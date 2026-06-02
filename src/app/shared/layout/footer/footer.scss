@@ -1,0 +1,79 @@
+@import "../../../../assets/styles/variables";
+
+.footer {
+  font-family: $font-family;
+  font-weight: 400;
+  font-size: 16px;
+  color: $base-text-color;
+  background-color: #B9D5FD;
+
+  .container {
+    padding: 40px 0 54px;
+
+    .footer-menu {
+      display: flex;
+      align-items: center;
+      margin-bottom: 40px;
+
+      nav ul {
+        display: flex;
+        gap: 20px;
+        padding: 0;
+        margin: 0 0 0 40px;
+      }
+
+      li {
+        list-style: none;
+        border-bottom: 1px solid transparent;
+
+        a {
+          text-decoration: none;
+          color: $base-text-color;
+
+          &:hover {
+            text-decoration: underline $base-text-color;
+          }
+        }
+      }
+    }
+
+    .footer-info {
+      display: flex;
+      gap: 60px;
+      margin-bottom: 6px;
+
+      .footer-info-title {
+        color: $second-text-color;
+        font-weight: 500;
+        margin-bottom: 10px;
+      }
+
+      .footer-info-text {
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 130%;
+
+        &.address {
+          width: 253px;
+        }
+
+        &.email {
+          font-size: 14px;
+        }
+      }
+
+      .button {
+        margin-top: 10px;
+      }
+
+      .footer-info-social {
+        display: flex;
+        gap: 12px;
+        padding-top: 5px;
+      }
+    }
+    .copyright{
+      color: $second-text-color;
+    }
+  }
+}

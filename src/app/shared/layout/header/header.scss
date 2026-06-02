@@ -1,0 +1,52 @@
+@import "../../../../assets/styles/variables";
+
+.header{
+  font-family: $font-family;
+  font-weight: 500;
+  font-size: 16px;
+  color: $base-text-color;
+
+  .container{
+    padding: 40px 0 37px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .header-menu {
+      margin-left: 60px;
+      margin-right: 217px;
+      nav ul{
+        display: flex;
+        gap: 30px;
+        padding: 0;
+      margin: 0;
+      }
+          li {
+        list-style: none;
+        border-bottom: 1px solid transparent;
+      a{
+        text-decoration: none;
+        color: $base-text-color;
+        &:hover{
+          text-decoration: underline $base-text-color;
+        }
+      }
+      }
+    }
+    .header-phone{
+      color: $second-text-color;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+    .header-auth{
+      width: 185px;
+      display: flex;
+      column-gap: 7px;
+      align-items: center;
+      justify-content: end;
+      &:hover{
+        cursor: pointer;
+      }
+    }
+  }
+}

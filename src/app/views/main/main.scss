@@ -1,0 +1,297 @@
+@import "../../../assets/styles/variables";
+
+.main {
+  .container {
+    display: flex;
+    flex-direction: column;
+    row-gap: 120px;
+    margin-bottom: 120px;
+
+    .main-slider {
+      .main-slide {
+        height: 500px;
+        padding-top: 100px;
+        padding-left: 80px;
+
+        .main-slide-stock {
+          font-family: $font-family;
+          font-weight: 600;
+          font-size: 12px;
+          line-height: 130%;
+          letter-spacing: 0.4em;
+          text-transform: uppercase;
+          color: $second-text-color;
+        }
+
+        .main-slide-title {
+          font-family: $second-family;
+          font-weight: 400;
+          font-size: 50px;
+          line-height: 130%;
+          color: $color-white;
+          margin-bottom: 20px;
+          width: 575px;
+
+          &.no-text {
+            margin-bottom: 40px;
+          }
+
+          span {
+            color: $second-text-color;
+          }
+        }
+
+        .main-slide-text {
+          width: 456px;
+          font-family: $font-family;
+          font-weight: 400;
+          font-size: 24px;
+          line-height: 130%;
+          color: $color-white;
+          margin-bottom: 50px;
+        }
+      }
+    }
+
+    .main-services {
+      .main-services-cards {
+        padding-top: 40px;
+        display: flex;
+        justify-content: space-between;
+
+        .services-card {
+          width: 290px;
+          height: 498px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .services-card-img {
+            height: 291px;
+            margin-bottom: 15px;
+          }
+
+          .card-title {
+            margin-bottom: 10px;
+          }
+
+          .services-card-price {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            span {
+              font-family: $font-family;
+              font-weight: 600;
+              font-size: 20px;
+              line-height: 130%;
+              color: $second-text-color;
+            }
+          }
+        }
+      }
+    }
+
+    .main-about {
+      display: flex;
+
+      .main-about-img {
+        border-radius: 5px;
+        margin-right: 68px;
+        height: 453px;
+      }
+
+      .main-about-info {
+        .main-title {
+          margin-bottom: 20px;
+        }
+
+        .about-info-text {
+          max-width: 630px;
+          color: $third-text-color;
+
+          span {
+            font-weight: 500;
+          }
+        }
+
+        .about-info-advantages {
+          .advantages-title {
+            font-family: $second-family;
+            font-weight: 400;
+            font-size: 26px;
+            line-height: 130%;
+            color: $second-text-color;
+            margin-top: 40px;
+            margin-bottom: 20px;
+          }
+
+          .info-advantages {
+            display: flex;
+            row-gap: 20px;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-right: 9px;
+
+            .info-advantage {
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              width: 316px;
+              height: 90px;
+
+              .info-advantage-num {
+                margin-right: 20px;
+
+                .advantage-num-circle {
+                  width: 40px;
+                  height: 40px;
+                  border-radius: 50%;
+                  background-color: #B9D5FD;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+
+                  span {
+                    font-family: $second-family;
+                    font-weight: 500;
+                    font-size: 50px;
+                    line-height: 130%;
+                    color: $second-text-color;
+                    margin-bottom: 14px;
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .main-blog {
+      .main-blog-cards {
+
+        padding: 40px 0;
+        display: flex;
+        justify-content: space-between;
+
+        .main-blog-card {
+          width: 291px;
+          height: 571px;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .blog-card-img {
+            height: 291px;
+            margin-bottom: 15px;
+            position: relative;
+
+            .button {
+              position: absolute;
+              top: 10px;
+              right: 9px;
+            }
+          }
+
+          .card-title {
+            margin-bottom: 20px;
+          }
+
+          .blog-card-info {
+            padding-right: 4px;
+          }
+        }
+
+        a {
+          color: $second-text-color;
+          font-size: 16px;
+        }
+      }
+      .blog-link{
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        justify-content: end;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 130%;
+        text-decoration: none;
+        color: $second-text-color;
+      }
+    }
+    .main-reviews{
+      .main-reviews-slider{
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        .main-reviews-slide{
+          border: 2px solid $second-text-color;
+          border-radius: 5px;
+          width: 396px;
+          height: 267px;
+          padding: 30px;
+          box-sizing: border-box;
+          .reviews-slide-info{
+            display: flex;
+            align-items: center;
+            gap: 26px;
+            margin-bottom: 15px;
+            .reviews-slide-info-img{
+              width: 60px;
+              height: 60px;
+            }
+            .reviews-slide-info-name{
+              font-family: $font-family;
+              font-weight: 600;
+              font-size: 18px;
+              line-height: 130%;
+              color: $second-text-color;
+            }
+          }
+          .reviews-slide-text{
+            font-family: $font-family;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 140%;
+            color: $base-text-color;
+          }
+        }
+      }
+    }
+    .main-contacts{
+      display: flex;
+      gap: 26px;
+      .main-contacts-map img{
+        border-radius: 5px;
+        width: 607px;
+        height: 438px;
+        overflow: hidden;
+      }
+.main-contacts-info{
+  .main-contacts{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .main-contact{
+      width: 500px;
+      .main-contact-title{
+        font-family: $font-family;
+        font-weight: 500;
+        font-size: 20px;
+        line-height: 130%;
+        color: $second-text-color;
+        margin-bottom: 10px;
+      }
+      .main-contact-social{
+        display: flex;
+        gap: 20px;
+      }
+    }
+
+  }
+}
+    }
+  }
+}
