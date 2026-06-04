@@ -8,6 +8,7 @@ import { Layout } from './shared/layout/layout';
 import {Footer} from './shared/layout/footer/footer';
 import {AuthModule} from './views/auth/auth-module';
 import { Main } from './views/main/main';
+import {CarouselModule} from 'ngx-owl-carousel-o';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { Main } from './views/main/main';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
+    CarouselModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

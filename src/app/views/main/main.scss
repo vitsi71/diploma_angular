@@ -8,10 +8,54 @@
     margin-bottom: 120px;
 
     .main-slider {
+      position: relative;
+      // настройка стрелок слайдера
+      .carousel-arrows {
+        position: absolute;
+        top: 50%;
+        z-index: 10;
+        padding: 0 11px;
+        justify-content: space-between;
+        display: flex;
+        width: 100%;
+        box-sizing: border-box;
+      }
+
+      // настройка точек навигации слайдера
+      ::ng-deep .owl-dots {
+        position: absolute;
+        text-align: center;
+        bottom: 20px;
+        left: 46%;
+        z-index: 100;
+      }
+
+      ::ng-deep .owl-dot {
+        display: inline-block;
+        margin: 0 10px;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        //background-color: ;
+        cursor: pointer;
+        border: 1px solid $color-white;
+      }
+
+      ::ng-deep .owl-dot.active {
+        background-color: $color-white; /* активный цвет */
+      }
+
+      ::ng-deep .owl-dot span {
+        display: none; /* скрываем стандартный контент точек */
+      }
+
+      //////////////////////
+
       .main-slide {
         height: 500px;
         padding-top: 100px;
         padding-left: 80px;
+        box-sizing: border-box;
 
         .main-slide-stock {
           font-family: $font-family;
@@ -208,7 +252,8 @@
           font-size: 16px;
         }
       }
-      .blog-link{
+
+      .blog-link {
         display: flex;
         align-items: center;
         gap: 14px;
@@ -220,28 +265,45 @@
         color: $second-text-color;
       }
     }
-    .main-reviews{
-      .main-reviews-slider{
+
+    .main-reviews {
+       .main-reviews-slider {
         margin-top: 20px;
-        display: flex;
-        justify-content: space-between;
-        .main-reviews-slide{
+          position: relative;
+        .carousel-reviews-arrows{
+          width:1288px;
+          position: absolute;
+          top:50%;
+          left:-27px;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          //z-index: 10;
+.arr-prev{
+         rotate: 180deg;
+        }
+        }
+
+        .main-reviews-slide {
           border: 2px solid $second-text-color;
           border-radius: 5px;
           width: 396px;
           height: 267px;
           padding: 30px;
           box-sizing: border-box;
-          .reviews-slide-info{
+
+          .reviews-slide-info {
             display: flex;
             align-items: center;
             gap: 26px;
             margin-bottom: 15px;
-            .reviews-slide-info-img{
+
+            .reviews-slide-info-img {
               width: 60px;
               height: 60px;
             }
-            .reviews-slide-info-name{
+
+            .reviews-slide-info-name {
               font-family: $font-family;
               font-weight: 600;
               font-size: 18px;
@@ -249,7 +311,8 @@
               color: $second-text-color;
             }
           }
-          .reviews-slide-text{
+
+          .reviews-slide-text {
             font-family: $font-family;
             font-weight: 400;
             font-size: 16px;
@@ -259,39 +322,45 @@
         }
       }
     }
-    .main-contacts{
+
+    .main-contacts {
       display: flex;
       gap: 26px;
-      .main-contacts-map img{
+
+      .main-contacts-map img {
         border-radius: 5px;
         width: 607px;
         height: 438px;
         overflow: hidden;
       }
-.main-contacts-info{
-  .main-contacts{
-    margin-top: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    .main-contact{
-      width: 500px;
-      .main-contact-title{
-        font-family: $font-family;
-        font-weight: 500;
-        font-size: 20px;
-        line-height: 130%;
-        color: $second-text-color;
-        margin-bottom: 10px;
-      }
-      .main-contact-social{
-        display: flex;
-        gap: 20px;
-      }
-    }
 
-  }
-}
+      .main-contacts-info {
+        .main-contacts {
+          margin-top: 20px;
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+
+          .main-contact {
+            width: 500px;
+
+            .main-contact-title {
+              font-family: $font-family;
+              font-weight: 500;
+              font-size: 20px;
+              line-height: 130%;
+              color: $second-text-color;
+              margin-bottom: 10px;
+            }
+
+            .main-contact-social {
+              display: flex;
+              gap: 20px;
+            }
+          }
+
+        }
+      }
     }
   }
 }
