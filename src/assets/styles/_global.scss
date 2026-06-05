@@ -8,9 +8,11 @@ html, body {
   color: $base-text-color;
   line-height: 130%;
   font-size: 14px;
+  scroll-behavior: smooth;
+
 }
 
-.logo img{
+.logo img {
   width: 85px;
   height: 47px;
 }
@@ -20,7 +22,7 @@ html, body {
   margin: 0 auto;
 }
 
-.button{
+.button {
   border-radius: 5px;
   padding-block: 10px;
   padding-inline: 20px;
@@ -28,21 +30,33 @@ html, body {
   font-family: $font-family;
   color: $color-white;
   border: 0;
-  &:hover{
+
+  &:hover {
     cursor: pointer;
   }
-  &.smail{
+
+  &:disabled {
+    background: #a8aba7;
+
+    &:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  &.smail {
     font-weight: 500;
     font-size: 12px;
     height: 36px;
   }
-  &.big{
+
+  &.big {
     font-weight: 400;
     font-size: 16px;
     height: 51px;
     width: 163px;
   }
-  &.blog{
+
+  &.blog {
     padding-inline: 18px;
     background: $color-white;
     font-weight: 400;
@@ -52,13 +66,14 @@ html, body {
   }
 }
 
-.main-title{
+.main-title {
   font-family: $second-family;
   font-weight: 400;
   font-size: 38px;
   line-height: 130%;
   color: #709fdc;
 }
+
 .card-title {
   font-family: $font-family;
   font-weight: 500;
@@ -66,7 +81,8 @@ html, body {
   line-height: 130%;
   color: $second-text-color;
 }
-input.input{
+
+input.input {
   box-sizing: border-box;
   padding: 17px 20px;
   border: 2px solid $second-text-color;
@@ -76,10 +92,12 @@ input.input{
   font-size: 14px;
   color: $base-text-color;
   width: 100%;
-  &::placeholder{
+
+  &::placeholder {
     color: #a8aba7;
   }
 }
+
 input[type="checkbox"] {
 
   box-sizing: border-box;
@@ -89,6 +107,7 @@ input[type="checkbox"] {
   width: 14px;
   height: 14px;
 }
+
 //
 //.small-input {
 //  border: 1px solid #6cac72;

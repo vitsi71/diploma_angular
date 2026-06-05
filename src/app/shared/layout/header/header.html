@@ -1,25 +1,25 @@
 <div class="header">
   <div class="container">
-    <a href="#" class="logo">
+    <a routerLink="/" class="logo">
       <img src="assets/images/Logotype.png" alt="logo">
     </a>
     <div class="header-menu">
       <nav>
         <ul>
           <li>
-            <a routerLink='/'>Услуги</a>
+            <a fragment="services" routerLink='/'>Услуги</a>
           </li>
           <li>
-            <a routerLink='/catalog'>Онас</a>
+            <a fragment="about" routerLink='/'>Онас</a>
           </li>
           <li>
-            <a fragment="reviews" routerLink="/">Статьи</a>
+            <a fragment="main-blog" routerLink="/">Статьи</a>
           </li>
           <li>
-            <a fragment="delivery" routerLink="/">Отзывы</a>
+            <a fragment="main-reviews" routerLink="/">Отзывы</a>
           </li>
           <li>
-            <a fragment="delivery" routerLink="/">Контакты</a>
+            <a fragment="main-contacts" routerLink="/">Контакты</a>
           </li>
         </ul>
       </nav>
@@ -40,10 +40,15 @@
         </svg>
       </div>
       <div class="header-auth-info">
-        @if (false) {
-          <p>Привет, Роман!</p>
+        @if (isLogged()) {
+          <p [matMenuTriggerFor]="menu">Привет, {{ userName() }}!</p>
+          <mat-menu #menu="matMenu">
+            <button mat-menu-item>
+              <span (click)="logout()">Выйти</span>
+            </button>
+          </mat-menu>
         } @else {
-          <p>Войти</p>
+          <a routerLink="/login">Войти</a>
         }
       </div>
     </div>

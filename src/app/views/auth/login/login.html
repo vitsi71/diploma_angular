@@ -1,18 +1,43 @@
-<div class="login">
+<section class="login" [formGroup]="loginForm">
   <div class="container">
     <div class="login-info">
       <div class="login-info-title">Войти в личный кабинет</div>
       <div class="login-info-form">
-        <input type="email" class="input" placeholder="Электронная почта">
-        <input type="password" class="input" placeholder="Пароль">
+        <input type="email" class="input"
+               [ngStyle]="{'border-color':email?.invalid && (email?.dirty || email?.touched)? 'red':''}"
+               placeholder="Электронная почта" formControlName="email">
+        @if (email?.invalid && (email?.dirty || email?.touched)) {
+          <div class="text-danger">
+            @if (email?.errors?.['required']) {
+              Поле "Электронная почта" не заполнено.
+            }
+            @if (email?.errors?.['email']) {
+              "Электронная почта" не корректна.
+            }
+          </div>
+        }
+
+        <div class="input-password">
+          <input [type]="textPass ? 'password':'text'" class="input"
+                 [ngStyle]="{'border-color':password?.invalid && (password?.dirty || password?.touched)? 'red':''}"
+                 placeholder="Пароль" formControlName="password">
+          <span class="toggle-icon" [title]="textPass ?'Показать пароль':'Скрыть пароль'" (click)="viewPass()">👁</span>
+        @if (password?.invalid && (password?.dirty || email?.touched)) {
+          <div class="text-danger">
+            Поле "Пароль" не заполнено
+          </div>
+        }
+        </div>
         <div class="form-checkbox">
-          <input type="checkbox"  id="remember">
+          <input type="checkbox" id="remember" formControlName="rememberMe">
           <label for="remember">
             Запомнить меня
           </label>
         </div>
       </div>
-      <button class="button big">Зарегистрироваться</button>
+      <div class="auth-button">
+        <button class="button big" [disabled]="loginForm.invalid" (click)="login()">Войти</button>
+      </div>
       <div class="signup-link">
         Нет аккаунта?
         <a routerLink="/signup">Пройдите регистрацию</a>
@@ -22,4 +47,4 @@
       <img src="../../../../assets/images/login.png" alt="login.png">
     </div>
   </div>
-</div>
+</section>

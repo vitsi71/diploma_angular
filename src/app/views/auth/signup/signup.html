@@ -1,20 +1,66 @@
-<div class="signup">
+<div class="signup" [formGroup]="signupForm">
   <div class="container">
     <div class="signup-info">
       <div class="signup-info-title">Регистрация на сайте</div>
       <div class="signup-info-form">
-        <input type="text" class="input" placeholder="Ваше имя">
-        <input type="email" class="input" placeholder="Электронная почта">
-        <input type="password" class="input" placeholder="Пароль">
+        <input type="text" class="input"
+               [ngStyle]="{'border-color':name?.invalid && (name?.dirty || name?.touched)? 'red':''}"
+               placeholder="Ваше имя" formControlName="name">
+        @if (name?.invalid && (name?.dirty || name?.touched)) {
+          <div class="text-danger">
+            @if (name?.errors?.['required']) {
+              Поле "Ваше имя" не заполнено.
+            }
+            @if (name?.errors?.['pattern']) {
+              Поле может содержать только русские буквы и пробелы и начинаться с заглавной.
+            }
+          </div>
+        }
+        <input type="email" class="input"
+               [ngStyle]="{'border-color':email?.invalid && (email?.dirty || email?.touched)? 'red':''}"
+               placeholder="Электронная почта" formControlName="email">
+        @if (email?.invalid && (email?.dirty || email?.touched)) {
+          <div class="text-danger">
+            @if (email?.errors?.['required']) {
+              Поле "Электронная почта" не заполнено.
+            }
+            @if (email?.errors?.['email']) {
+              "Электронная почта" не корректна.
+            }
+          </div>
+        }
+        <div class="input-password">
+          <input [type]="textPass ? 'password':'text'" class="input"
+                 [ngStyle]="{'border-color':password?.invalid && (password?.dirty || password?.touched)? 'red':''}"
+                 placeholder="Пароль" formControlName="password">
+          <span class="toggle-icon" [title]="textPass ?'Показать пароль':'Скрыть пароль'" (click)="viewPass()">👁</span>
+          @if (password?.invalid && (password?.dirty || email?.touched)) {
+            <div class="text-danger">
+              @if (password?.errors?.['required']) {
+                Поле "Пароль" не заполнено.
+              }
+              @if (password?.errors?.['pattern']) {
+                Пароль - не менее 8 символов, минимум 1 заглавная буква и 1 цифра..
+              }
+            </div>
+          }
+        </div>
         <div class="form-checkbox">
-          <input type="checkbox"  id="agree">
+          <input type="checkbox" id="agree" formControlName="agree">
           <label for="agree" class="form-checkbox-text">
-            Я принимаю <a href="#">условия пользовательского соглашения</a>
-            и даю <a href="#">согласие на обработку персональных данных.</a>
+            Я принимаю <a routerLink="/agreement" target="_blank">условия пользовательского соглашения</a>
+            и даю <a fragment="consent" routerLink="/agreement" target="_blank">согласие на обработку персональных
+            данных.</a>
           </label>
         </div>
+        <div class="text-danger">
+          @if ( agree?.touched && agree?.errors?.['required']) {
+            Необходимо подтвердить согласие.
+          }
+        </div>
+
       </div>
-      <button class="button big">Зарегистрироваться</button>
+      <button class="button big" (click)="signup()">Зарегистрироваться</button>
       <div class="login-link">
         Уже есть аккаунт?
         <a routerLink="/login">Войдите</a>

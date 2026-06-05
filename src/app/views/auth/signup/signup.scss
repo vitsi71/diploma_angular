@@ -23,6 +23,24 @@
 
         .input {
           margin-bottom: 5px;
+
+
+        }
+        .input-password {
+          position: relative;
+          .toggle-icon {
+            position: absolute;
+            top: 17px;
+            right: 20px;
+            font-size: 20px;
+            cursor: pointer;
+          }
+        }
+
+
+        .text-danger {
+          color: red;
+          margin-bottom: 5px;
         }
 
         .form-checkbox {
@@ -34,7 +52,8 @@
           font-size: 14px;
           color: $base-text-color;
           line-height: 130%;
-          a{
+
+          a {
             color: $second-text-color;
           }
         }
