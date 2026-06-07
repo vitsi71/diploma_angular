@@ -92,7 +92,10 @@ input.input {
   font-size: 14px;
   color: $base-text-color;
   width: 100%;
-
+&:focus{
+  outline: none;
+  border-color: #3498db;
+}
   &::placeholder {
     color: #a8aba7;
   }

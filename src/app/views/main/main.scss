@@ -227,9 +227,17 @@
           justify-content: space-between;
 
           .blog-card-img {
+            border-radius: 5px;
+            width: 291px;
             height: 291px;
+            display: flex;
+            justify-content: center;
+            overflow: hidden;
             margin-bottom: 15px;
             position: relative;
+            img{
+              height: 100%;
+            }
 
             .button {
               position: absolute;
@@ -267,21 +275,22 @@
     }
 
     .main-reviews {
-       .main-reviews-slider {
+      .main-reviews-slider {
         margin-top: 20px;
-          position: relative;
-        .carousel-reviews-arrows{
-          width:1288px;
+        position: relative;
+
+        .carousel-reviews-arrows {
+          width: 1288px;
           position: absolute;
-          top:50%;
-          left:-27px;
+          top: 50%;
+          left: -27px;
           display: flex;
           align-items: center;
           justify-content: space-between;
           //z-index: 10;
-.arr-prev{
-         rotate: 180deg;
-        }
+          .arr-prev {
+            rotate: 180deg;
+          }
         }
 
         .main-reviews-slide {
@@ -327,7 +336,7 @@
       display: flex;
       gap: 26px;
 
-      .main-contacts-map{
+      .main-contacts-map {
         border-radius: 5px;
         width: 607px;
         height: 438px;
@@ -365,3 +374,106 @@
   }
 }
 
+.popup {
+
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: rgba(134, 140, 134, 0.5);
+  top: 0;
+  left: 0;
+  z-index: 15;
+
+  .popup-window {
+    border: 2px solid $second-text-color;
+    border-radius: 10px;
+    width: 727px;
+    height: 489px;
+    box-sizing: border-box;
+    background: $color-white;
+    padding: 94px 140px 50px;
+    text-align: center;
+    position: fixed;
+    top: calc(50% - 245px);
+    left: calc(50% - 364px);
+    z-index: 15;
+
+    .close-popup {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      cursor: pointer;
+    }
+
+    .popup-form {
+      margin-top: 20px;
+      padding: 0 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+
+      .select-wrapper {
+        position: relative;
+        display: inline-block;
+      }
+
+      .select-wrapper::after {
+        content: '▼';
+        color: $second-text-color;
+        font-size: 18px;
+        position: absolute;
+        right: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+
+      .popup-form-services {
+        box-sizing: border-box;
+        padding: 17px 20px;
+        border: 2px solid $second-text-color;
+        border-radius: 3px;
+        font-family: $font-family;
+        font-weight: 400;
+        font-size: 14px;
+        color: $base-text-color;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+        width: 100%;
+
+        &:focus {
+          outline: none;
+          border-color: $second-text-color;
+        }
+      }
+
+      .button {
+        margin-top: 15px;
+        width: 100%;
+      }
+      .popup-err{
+        font-family: $font-family;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 130%;
+        color: #bf0303;
+        margin-top: 10px;
+      }
+    }
+    .popup-resp{
+      margin-top: 69px;
+      .popup-text{
+        margin-top: 20px;
+        margin-bottom: 40px;
+        font-family: $font-family;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 130%;
+        text-align: center;
+        color: $third-text-color
+      }
+
+    }
+  }
+}

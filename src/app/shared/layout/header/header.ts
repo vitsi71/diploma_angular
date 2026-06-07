@@ -37,7 +37,8 @@ export class Header implements OnInit {
             this._snackBar.open((data as DefaultResponseType).message);
           } else {
             if ((data as UserResponseType).name !== undefined) {
-              this.userName.set((data as UserResponseType).name);;
+              this.userName.set((data as UserResponseType).name);
+              this.authService.setUserName((data as UserResponseType).name);
             } else {
               this.userName.set("Гость");;
             }
@@ -59,6 +60,7 @@ export class Header implements OnInit {
   private userClear() {
     this.authService.removeTokens();
     this.authService.userId = null;
+    this.authService.setUserName(null)
     this._snackBar.open('Вы вышли из системы');
     this.router.navigate(['/']);
   }

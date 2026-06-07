@@ -36,7 +36,7 @@
           <div class="main-slide" style="background-image:  url('../../../assets/images/banner1.png')">
             <div class="main-slide-stock">Предложение месяца</div>
             <div class="main-slide-title no-text">Продвижение в Instagram для вашего бизнеса <span>-15%!</span></div>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.promotion)">Подробнее</button>
           </div>
         </ng-template>
         <ng-template carouselSlide>
@@ -44,7 +44,7 @@
             <div class="main-slide-stock">Акция</div>
             <div class="main-slide-title">Нужен грамотный <span>копирайтер</span>?</div>
             <div class="main-slide-text">Весь декабрь у нас действует акция на работу копирайтера.</div>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.copywriting)">Подробнее</button>
           </div>
         </ng-template>
         <ng-template carouselSlide>
@@ -52,7 +52,7 @@
             <div class="main-slide-stock">Новость дня</div>
             <div class="main-slide-title"><span>6 место</span> в ТОП-10 SMM-агенств Москвы!</div>
             <div class="main-slide-text">Мы благодарим каждого, кто голосовал за нас!</div>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.promotion)">Подробнее</button>
           </div>
         </ng-template>
       </owl-carousel-o>
@@ -73,7 +73,7 @@
           </div>
           <div class="services-card-price">
             <span>От 7 500₽</span>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.website)">Подробнее</button>
           </div>
         </div>
 
@@ -89,7 +89,7 @@
           </div>
           <div class="services-card-price">
             <span>От 3 500₽</span>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.promotion)">Подробнее</button>
           </div>
         </div>
 
@@ -106,7 +106,7 @@
           </div>
           <div class="services-card-price">
             <span>От 1 000₽</span>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.marketing)">Подробнее</button>
           </div>
         </div>
 
@@ -123,7 +123,7 @@
           </div>
           <div class="services-card-price">
             <span>От 750₽</span>
-            <button class="button big">Подробнее</button>
+            <button class="button big" (click)="popupOpen(ServiceName.copywriting)">Подробнее</button>
           </div>
         </div>
       </div>
@@ -194,63 +194,20 @@
       <div class="main-title">Популярные статьи из блога</div>
       <div class="main-blog-cards">
 
-        <div class="main-blog-card">
-          <div>
-            <div class="blog-card-img" style="background-image:  url('../../../assets/images/main_blog1.png')">
-              <button class="button blog">Фриланс</button>
-            </div>
-            <div class="card-title">6 сайтов для повышения продуктивности</div>
-            <div class="blog-card-info">
-              Хотите проводить время в сети с пользой? Наша подборка из шести полезных, но малоизвестных сайтов увеличит
-              вашу продуктивность, поможет успевать больше в течение дня и всегда быть на шаг впереди!
-            </div>
-          </div>
-          <a href="">Читать дальше</a>
-        </div>
 
+        @for (article of articleTop(); track $index){
         <div class="main-blog-card">
           <div>
-            <div class="blog-card-img" style="background-image:  url('../../../assets/images/main_blog2.png')">
-              <button class="button blog">Таргет</button>
+            <div class="blog-card-img">
+              <img src='../../../assets/images/{{article.image}}' alt="">
+              <button class="button blog">{{article.category}}</button>
             </div>
-            <div class="card-title">Как произвести впечатление на нового клиента?</div>
-            <div class="blog-card-info">
-              Поиск новых клиентов — это сложная задача не только для новичков, но и для опытных специалистов. Мы
-              расскажем, как справиться с волнением, завоевать доверие клиента и произвести на него потрясающее первое
-              впечатление.
-            </div>
+            <div class="card-title">{{article.title}}</div>
+            <div class="blog-card-info">{{article.description}}</div>
           </div>
           <a href="">Читать дальше</a>
         </div>
-
-        <div class="main-blog-card">
-          <div>
-            <div class="blog-card-img" style="background-image:  url('../../../assets/images/main_blog3.png')">
-              <button class="button blog">Фриланс</button>
-            </div>
-            <div class="card-title">Как бороться с конкуренцией на фрилансе?</div>
-            <div class="blog-card-info">
-              Конкуренция — это часть нашей жизни. Мы боремся за место работы, за победу на конкурсе и даже за
-              возможность
-              купить последний круассан в любимом кафе. Фриланс не исключение.
-            </div>
-          </div>
-          <a href="">Читать дальше</a>
-        </div>
-
-        <div class="main-blog-card">
-          <div>
-            <div class="blog-card-img" style="background-image:  url('../../../assets/images/main_blog4.png')">
-              <button class="button blog">SMM</button>
-            </div>
-            <div class="card-title">SMM-специалисты: кто они?</div>
-            <div class="blog-card-info">Профессия SММ-менеджера набирает все большую популярность. В эпоху интернета уже
-              не только новости – приобретение товаров и услуг уходит в онлайн, а просмотр любимых сайтов становится
-              ежедневной рутиной.
-            </div>
-          </div>
-          <a href="">Читать дальше</a>
-        </div>
+        }
 
       </div>
       <a routerLink="/blog" class="blog-link">Перейти в блог
@@ -300,20 +257,6 @@
         </div>
 
         <owl-carousel-o [options]="reviewsSliderOptions" #owlReviewsCar>
-          <ng-template carouselSlide>
-            <div class="main-reviews-slide">
-              <div class="reviews-slide-info">
-                <div class="reviews-slide-info-img"
-                     style="background-image:  url('../../../assets/images/rew_img1.png')"></div>
-                <div class="reviews-slide-info-name">Станислав</div>
-              </div>
-              <div class="reviews-slide-text">
-                Спасибо огромное АйтиШторму за прекрасный блог с полезными статьями! Именно они и побудили меня
-                углубиться в
-                тему SMM и начать свою карьеру.
-              </div>
-            </div>
-          </ng-template>
           <ng-template carouselSlide>
             <div class="main-reviews-slide">
               <div class="reviews-slide-info">
@@ -412,3 +355,46 @@
 
   </div>
 </div>
+
+
+<div class="popup" [style.display]="popup ? 'block':'none'">
+  <div class="popup-window">
+    <div class="close-popup" (click)="popupClose()">
+      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <line x1="1.93562" y1="2.65" x2="13.9564" y2="14.6708" stroke="#BEBEBE" stroke-linecap="round"/>
+        <line x1="13.9236" y1="2.62979" x2="1.90277" y2="14.6506" stroke="#BEBEBE" stroke-linecap="round"/>
+      </svg>
+    </div>
+    @if (respPopup()) {
+      <div class="popup-resp">
+        <div class="main-title">Спасибо за вашу заявку!</div>
+        <div class="popup-text">
+          Мы свяжемся с вами при первой же возможности.
+        </div>
+        <button class="button smail" (click)="popupClose()">Окей</button>
+      </div>
+    } @else {
+      <div class="main-title">Заявка на услугу</div>
+      <div class="popup-form" [formGroup]="popupForm">
+        <div class="select-wrapper">
+          <select class="popup-form-services" name="service" formControlName="service" #service>
+            @for (serv of servicesType; track $index) {
+              <option [value]="serv.key" >{{serv.value}}</option>
+            }
+          </select>
+        </div>
+        <input type="text" class="input" placeholder="Ваше имя" formControlName="nameUser" #nameUser>
+
+        <input type="tel" class="input" placeholder="Ваш номер телефона" formControlName="phoneUser" #phoneUser>
+        <button class="button big" [disabled]="popupForm.invalid" (click)="sendRequest()">Оставить заявку</button>
+
+        @if (popupErr()) {
+          <div class="popup-err">
+            Ошибка при отправке формы. Попробуйте еще раз
+          </div>
+        }
+      </div>
+    }
+  </div>
+</div>
+

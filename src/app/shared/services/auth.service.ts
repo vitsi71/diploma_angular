@@ -13,6 +13,7 @@ export class AuthService {
   public accessTokenKey:string = 'accessToken';
   public refreshTokenKey:string = 'refreshToken';
   public userIdKey:string = 'userId';
+  public userNameKey:string = 'userName';
 
   public isLogged$: Subject<boolean> = new Subject<boolean>(); // для отслеживания изменений в авторизации
   public isLogged:boolean = false;
@@ -100,6 +101,16 @@ export class AuthService {
       localStorage.setItem(this.userIdKey,id);
     } else {
       localStorage.removeItem(this.userIdKey);
+    }
+  }
+  public getUserName():null|string {
+    return  localStorage.getItem(this.userNameKey);
+  }
+  public setUserName (name:string|null) {
+    if(name){
+      localStorage.setItem(this.userNameKey,name);
+    } else {
+      localStorage.removeItem(this.userNameKey);
     }
   }
 

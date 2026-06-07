@@ -15,7 +15,7 @@ import { Main } from './views/main/main';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { authInterceptor } from './shared/services/auth-interceptor';
 import {Agreement} from './views/auth/agreement/agreement';
@@ -30,6 +30,7 @@ import {Agreement} from './views/auth/agreement/agreement';
     MatSnackBarModule,
     FormsModule,
     CarouselModule,
+    ReactiveFormsModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
