@@ -6,7 +6,7 @@ import {OtherServices} from '../../shared/services/other.services';
 import {DefaultResponseType} from '../../../types/default-response.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ArticleServices} from '../../shared/services/article.services';
-import {ArticleType} from '../../../types/article.type';
+import {ArticleCardType} from '../../../types/articleCard.type';
 import {AuthService} from '../../shared/services/auth.service';
 
 @Component({
@@ -21,7 +21,7 @@ export class Main implements OnInit {
   popup: boolean = false;
   popupErr: WritableSignal<boolean> = signal<boolean>(false);
   respPopup: WritableSignal<boolean> = signal<boolean>(false);
-  articleTop: WritableSignal<ArticleType[]> = signal<ArticleType[]>([]);
+  articleTop: WritableSignal<ArticleCardType[]> = signal<ArticleCardType[]>([]);
 
 
   protected readonly ServiceName = ServiceName;
@@ -46,14 +46,14 @@ export class Main implements OnInit {
   ngOnInit() {
     this.articleServices.getArticlesTop()
       .subscribe({
-        next: (data:ArticleType[] | DefaultResponseType): void => {
+        next: (data:ArticleCardType[] | DefaultResponseType): void => {
           if ((data as DefaultResponseType).error) {
             this._snackBar.open((data as DefaultResponseType).message);
             this.popupErr.set(true);
             throw new Error((data as DefaultResponseType).message);
           }
 
-          this.articleTop.set(data as ArticleType[]);
+          this.articleTop.set(data as ArticleCardType[]);
         },
         error: (): void => {
           this._snackBar.open('Нет ответа от системы ');

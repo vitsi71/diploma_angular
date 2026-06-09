@@ -64,7 +64,7 @@
           line-height: 130%;
           letter-spacing: 0.4em;
           text-transform: uppercase;
-          color: $second-text-color;
+          color: $second-color;
         }
 
         .main-slide-title {
@@ -81,7 +81,7 @@
           }
 
           span {
-            color: $second-text-color;
+            color: $second-color;
           }
         }
 
@@ -129,7 +129,7 @@
               font-weight: 600;
               font-size: 20px;
               line-height: 130%;
-              color: $second-text-color;
+              color: $second-color;
             }
           }
         }
@@ -146,7 +146,7 @@
       }
 
       .main-about-info {
-        .main-title {
+        .base-title {
           margin-bottom: 20px;
         }
 
@@ -165,7 +165,7 @@
             font-weight: 400;
             font-size: 26px;
             line-height: 130%;
-            color: $second-text-color;
+            color: $second-color;
             margin-top: 40px;
             margin-bottom: 20px;
           }
@@ -201,7 +201,7 @@
                     font-weight: 500;
                     font-size: 50px;
                     line-height: 130%;
-                    color: $second-text-color;
+                    color: $second-color;
                     margin-bottom: 14px;
                   }
                 }
@@ -256,7 +256,7 @@
         }
 
         a {
-          color: $second-text-color;
+          color: $second-color;
           font-size: 16px;
         }
       }
@@ -270,7 +270,7 @@
         font-size: 20px;
         line-height: 130%;
         text-decoration: none;
-        color: $second-text-color;
+        color: $second-color;
       }
     }
 
@@ -294,7 +294,7 @@
         }
 
         .main-reviews-slide {
-          border: 2px solid $second-text-color;
+          border: 2px solid $second-color;
           border-radius: 5px;
           width: 396px;
           height: 267px;
@@ -317,7 +317,7 @@
               font-weight: 600;
               font-size: 18px;
               line-height: 130%;
-              color: $second-text-color;
+              color: $second-color;
             }
           }
 
@@ -358,7 +358,7 @@
               font-weight: 500;
               font-size: 20px;
               line-height: 130%;
-              color: $second-text-color;
+              color: $second-color;
               margin-bottom: 10px;
             }
 
@@ -385,7 +385,7 @@
   z-index: 15;
 
   .popup-window {
-    border: 2px solid $second-text-color;
+    border: 2px solid $second-color;
     border-radius: 10px;
     width: 727px;
     height: 489px;
@@ -419,7 +419,7 @@
 
       .select-wrapper::after {
         content: '▼';
-        color: $second-text-color;
+        color: $second-color;
         font-size: 18px;
         position: absolute;
         right: 15px;
@@ -431,7 +431,7 @@
       .popup-form-services {
         box-sizing: border-box;
         padding: 17px 20px;
-        border: 2px solid $second-text-color;
+        border: 2px solid $second-color;
         border-radius: 3px;
         font-family: $font-family;
         font-weight: 400;
@@ -444,7 +444,7 @@
 
         &:focus {
           outline: none;
-          border-color: $second-text-color;
+          border-color: $second-color;
         }
       }
 

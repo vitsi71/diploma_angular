@@ -59,7 +59,7 @@
     </section>
 
     <section class="main-services" id="services">
-      <div class="main-title">Услуги, которые мы предлагаем</div>
+      <div class="base-title">Услуги, которые мы предлагаем</div>
       <div class="main-services-cards">
         <div class="services-card">
           <div>
@@ -134,7 +134,7 @@
         <img src="assets/images/main-about.png">
       </div>
       <div class="main-about-info">
-        <div class="main-title">Кто мы и чем мы занимаемся?</div>
+        <div class="base-title">Кто мы и чем мы занимаемся?</div>
         <div class="about-info-text">
           <span>АйтиШторм</span> — это ваш помощник №1 при решении таких вопросов, как продвижение в сети, разработка
           сайтов для
@@ -191,7 +191,7 @@
     </section>
 
     <section class="main-blog" id="main-blog">
-      <div class="main-title">Популярные статьи из блога</div>
+      <div class="base-title">Популярные статьи из блога</div>
       <div class="main-blog-cards">
 
 
@@ -205,7 +205,7 @@
             <div class="card-title">{{article.title}}</div>
             <div class="blog-card-info">{{article.description}}</div>
           </div>
-          <a href="">Читать дальше</a>
+          <a [routerLink]="['/article']" [queryParams]="{url: article.url}">Читать дальше</a>
         </div>
         }
 
@@ -221,7 +221,7 @@
 
     <section class="main-reviews" id="main-reviews">
 
-      <div class="main-title">Отзывы о нашей работе</div>
+      <div class="base-title">Отзывы о нашей работе</div>
       <div class="main-reviews-slider">
         <div class="carousel-reviews-arrows">
           <a (click)="owlReviewsCar.prev()">
@@ -311,7 +311,7 @@
 
       </div>
       <div class="main-contacts-info">
-        <div class="main-title">Контакты</div>
+        <div class="base-title">Контакты</div>
         <div class="main-contacts">
           <div class="main-contact">
             <div class="main-contact-title">Адрес</div>
@@ -367,14 +367,14 @@
     </div>
     @if (respPopup()) {
       <div class="popup-resp">
-        <div class="main-title">Спасибо за вашу заявку!</div>
+        <div class="base-title">Спасибо за вашу заявку!</div>
         <div class="popup-text">
           Мы свяжемся с вами при первой же возможности.
         </div>
         <button class="button smail" (click)="popupClose()">Окей</button>
       </div>
     } @else {
-      <div class="main-title">Заявка на услугу</div>
+      <div class="base-title">Заявка на услугу</div>
       <div class="popup-form" [formGroup]="popupForm">
         <div class="select-wrapper">
           <select class="popup-form-services" name="service" formControlName="service" #service>

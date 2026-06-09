@@ -1,0 +1,253 @@
+@import "../../../assets/styles/variables";
+
+.article {
+  margin-top: 80px;
+  margin-bottom: 120px;
+
+  h1, h2, h3 {
+    color: $second-color !important;
+  }
+
+  .container {
+    .preTitle {
+      display: flex;
+      gap: 8px;
+      font-family: $font-family;
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 130%;
+      color: #b9d5fd;
+      align-items: center;
+
+      span {
+        font-size: 14px;
+        line-height: 140%;
+      }
+
+      p {
+        margin: 0;
+        font-weight: 500;
+        line-height: 130%;
+        color: $second-color;
+      }
+    ;
+    }
+
+    .article-header {
+      margin: 60px 0;
+      display: flex;
+      justify-content: space-between;
+
+      .article-info {
+        width: 607px;
+
+        .card-title {
+          margin-top: 40px;
+          font-weight: 400;
+        }
+      }
+
+      .article-img {
+        border-radius: 5px;
+        width: 527px;
+        height: 320px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+        }
+      }
+    }
+
+
+    .article-body {
+      display: flex;
+      justify-content: space-between;
+
+      .article-body-section {
+        width: 818px;
+
+        a {
+          text-decoration: none;
+          color: $second-color;
+        }
+
+        .article-social {
+          font-weight: 500;
+          color: $second-color;
+          display: flex;
+          align-items: center;
+
+          .article-social-icon {
+            display: flex;
+            gap: 14px;
+            margin-left: 20px;
+          }
+        }
+
+        .base-title {
+          margin-top: 60px;
+          margin-bottom: 20px;
+
+          &.isLogged {
+            margin-top: 120px;
+          }
+
+        }
+
+        .article-warning {
+          margin-bottom: 20px;
+        }
+
+        .article-textarea {
+          margin: 20px 0;
+          width: 100%;
+          border: 2px solid $second-color;
+          border-radius: 3px;
+          padding: 20px;
+          height: 248px;
+          box-sizing: border-box;
+
+          &:focus {
+            outline: none;
+            border-color: #3498db;
+          }
+
+          &::placeholder {
+            color: #a8aba7;
+          }
+        }
+
+        .button {
+          margin-bottom: 20px;
+          width: 422px;
+        }
+
+        .article-comments {
+          margin-top: 40px;
+          display: flex;
+          flex-direction: column;
+          gap: 40px;
+          margin-bottom: 60px;
+
+          .comment {
+            .comment-info {
+              display: flex;
+              gap: 26px;
+              align-items: center;
+
+              .comment-info-userIcon {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+              }
+
+              .comment-info-name {
+                font-weight: 600;
+                font-size: 18px;
+                line-height: 130%;
+                color: $second-color;
+                margin-left: 26px;
+
+                .comment-dateTime {
+                  font-size: 14px;
+                  color: #bebebe;
+                  margin-top: 10px;
+
+                }
+              }
+            }
+
+            .comment-text {
+              line-height: 140%;
+              color: $base-text-color;
+              margin-top: 15px;
+              margin-bottom: 39px;
+            }
+
+            .comment-options {
+              display: flex;
+              align-items: center;
+              gap: 15px;
+
+              .like-option {
+                display: flex;
+                gap: 2px;
+                font-weight: 600;
+                line-height: 140%;
+                align-items: center;
+              }
+            }
+
+          }
+        }
+
+        .comment-add {
+          display: flex;
+          gap: 10px;
+          align-items: center;
+          cursor: pointer;
+        }
+      }
+
+      .articles-related {
+        width: 292px;
+        margin-top: 60px;
+
+        .base-title {
+          font-size: 26px;
+          margin-bottom: 20px;
+        }
+
+        .article-related {
+          display: flex;
+          flex-direction: column;
+          gap: 60px;
+
+          .main-blog-card {
+            width: 291px;
+            height: 571px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .blog-card-img {
+              border-radius: 5px;
+              width: 291px;
+              height: 291px;
+              display: flex;
+              justify-content: center;
+              overflow: hidden;
+              margin-bottom: 15px;
+              position: relative;
+
+              img {
+                height: 100%;
+              }
+
+              .button {
+                position: absolute;
+                top: 10px;
+                right: 9px;
+              }
+            }
+
+            .card-title {
+              margin-bottom: 20px;
+            }
+
+            .blog-card-info {
+              padding-right: 4px;
+            }
+          }
+
+          a {
+            color: $second-color;
+            font-size: 16px;
+          }
+        }
+      }
+    }
+  }
+}
+

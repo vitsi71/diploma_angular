@@ -43,7 +43,7 @@
       margin-bottom: 6px;
 
       .footer-info-title {
-        color: $second-text-color;
+        color: $second-color;
         font-weight: 500;
         margin-bottom: 10px;
       }
@@ -73,7 +73,7 @@
       }
     }
     .copyright{
-      color: $second-text-color;
+      color: $second-color;
     }
   }
 }
@@ -89,7 +89,7 @@
   z-index: 15;
 
   .popup-window {
-    border: 2px solid $second-text-color;
+    border: 2px solid $second-color;
     border-radius: 10px;
     width: 727px;
     height: 489px;
@@ -123,7 +123,7 @@
 
       .select-wrapper::after {
         content: '▼';
-        color: $second-text-color;
+        color: $second-color;
         font-size: 18px;
         position: absolute;
         right: 15px;
@@ -135,7 +135,7 @@
       .popup-form-services {
         box-sizing: border-box;
         padding: 17px 20px;
-        border: 2px solid $second-text-color;
+        border: 2px solid $second-color;
         border-radius: 3px;
         font-family: $font-family;
         font-weight: 400;
@@ -148,7 +148,7 @@
 
         &:focus {
           outline: none;
-          border-color: $second-text-color;
+          border-color: $second-color;
         }
       }
 

@@ -93,14 +93,14 @@
       </div>
       @if (respPopup()) {
         <div class="popup-resp">
-          <div class="main-title">Спасибо за вашу заявку!</div>
+          <div class="base-title">Спасибо за вашу заявку!</div>
           <div class="popup-text">
             Мы свяжемся с вами при первой же возможности.
           </div>
           <button class="button smail" (click)="popupClose()">Окей</button>
         </div>
       } @else {
-        <div class="main-title">Закажите бесплатную консультацию!</div>
+        <div class="base-title">Закажите бесплатную консультацию!</div>
         <div class="popup-form" [formGroup]="popupForm">
           <input type="text" class="input" placeholder="Ваше имя" formControlName="nameUser">
           <input type="tel" class="input" placeholder="Ваш номер телефона" formControlName="phoneUser">

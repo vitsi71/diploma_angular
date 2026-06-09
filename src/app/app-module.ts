@@ -1,9 +1,8 @@
 import {
   NgModule,
-  provideBrowserGlobalErrorListeners,
-  provideZonelessChangeDetection,
+  provideBrowserGlobalErrorListeners
 } from '@angular/core';
-import { BrowserModule, provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { BrowserModule} from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -15,13 +14,15 @@ import { Main } from './views/main/main';
 import { CarouselModule } from 'ngx-owl-carousel-o';
 import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatMenuModule } from '@angular/material/menu';
 import { authInterceptor } from './shared/services/auth-interceptor';
-import {Agreement} from './views/auth/agreement/agreement';
+import { Agreement } from './views/auth/agreement/agreement';
+import { Article } from './views/article/article';
+import {SharedModule} from './shared/shared-module';
 
 @NgModule({
-  declarations: [App, Footer, Header, Layout, Main, Agreement],
+  declarations: [App, Footer, Header, Layout, Main, Agreement, Article],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -31,6 +32,7 @@ import {Agreement} from './views/auth/agreement/agreement';
     FormsModule,
     CarouselModule,
     ReactiveFormsModule,
+    SharedModule
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),
