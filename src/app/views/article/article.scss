@@ -174,8 +174,18 @@
                 display: flex;
                 gap: 2px;
                 font-weight: 600;
-                line-height: 140%;
+                line-height: 1;
                 align-items: center;
+                cursor: pointer;
+                color: $base-text-color;
+
+                &.active {
+                  color: $second-color;
+                }
+              }
+
+              .spam {
+                cursor: pointer;
               }
             }
 
@@ -203,43 +213,6 @@
           display: flex;
           flex-direction: column;
           gap: 60px;
-
-          .main-blog-card {
-            width: 291px;
-            height: 571px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-
-            .blog-card-img {
-              border-radius: 5px;
-              width: 291px;
-              height: 291px;
-              display: flex;
-              justify-content: center;
-              overflow: hidden;
-              margin-bottom: 15px;
-              position: relative;
-
-              img {
-                height: 100%;
-              }
-
-              .button {
-                position: absolute;
-                top: 10px;
-                right: 9px;
-              }
-            }
-
-            .card-title {
-              margin-bottom: 20px;
-            }
-
-            .blog-card-info {
-              padding-right: 4px;
-            }
-          }
 
           a {
             color: $second-color;

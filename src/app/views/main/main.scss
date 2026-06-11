@@ -19,6 +19,7 @@
         display: flex;
         width: 100%;
         box-sizing: border-box;
+        cursor: pointer;
       }
 
       // настройка точек навигации слайдера
@@ -219,46 +220,6 @@
         display: flex;
         justify-content: space-between;
 
-        .main-blog-card {
-          width: 291px;
-          height: 571px;
-          display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-
-          .blog-card-img {
-            border-radius: 5px;
-            width: 291px;
-            height: 291px;
-            display: flex;
-            justify-content: center;
-            overflow: hidden;
-            margin-bottom: 15px;
-            position: relative;
-            img{
-              height: 100%;
-            }
-
-            .button {
-              position: absolute;
-              top: 10px;
-              right: 9px;
-            }
-          }
-
-          .card-title {
-            margin-bottom: 20px;
-          }
-
-          .blog-card-info {
-            padding-right: 4px;
-          }
-        }
-
-        a {
-          color: $second-color;
-          font-size: 16px;
-        }
       }
 
       .blog-link {
@@ -287,6 +248,7 @@
           display: flex;
           align-items: center;
           justify-content: space-between;
+          cursor: pointer;
           //z-index: 10;
           .arr-prev {
             rotate: 180deg;
@@ -300,6 +262,7 @@
           height: 267px;
           padding: 30px;
           box-sizing: border-box;
+          margin-bottom: 1px;
 
           .reviews-slide-info {
             display: flex;
@@ -452,7 +415,8 @@
         margin-top: 15px;
         width: 100%;
       }
-      .popup-err{
+
+      .popup-err {
         font-family: $font-family;
         font-weight: 400;
         font-size: 14px;
@@ -461,9 +425,11 @@
         margin-top: 10px;
       }
     }
-    .popup-resp{
+
+    .popup-resp {
       margin-top: 69px;
-      .popup-text{
+
+      .popup-text {
         margin-top: 20px;
         margin-bottom: 40px;
         font-family: $font-family;

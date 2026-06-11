@@ -1,4 +1,4 @@
 export interface DefaultResponseType {
-  error:boolean,
-  message:string,
+  error:boolean;
+  message:string;
 }

@@ -1,3 +1,5 @@
+import {ActionType} from './action.type';
+
 export interface ArticleType {
   id:string,
   text:string,
@@ -20,7 +22,8 @@ export interface CommentType {
   user: {
     id: string,
     name: string
-  }
+  },
+  action?:ActionType
 }
 
 export interface CommentsType {

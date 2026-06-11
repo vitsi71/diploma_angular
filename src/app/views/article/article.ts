@@ -7,6 +7,8 @@ import {ArticleCardType} from '../../../types/articleCard.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from "../../shared/services/auth.service";
 import {CommentsServices} from '../../shared/services/comments.services';
+import {HttpErrorResponse} from '@angular/common/http';
+import {ActionType} from '../../../types/action.type';
 
 @Component({
   selector: 'app-article',
@@ -78,18 +80,52 @@ export class Article implements OnInit {
       let count: number = 0;
       this.commentsServices.getComments(this.article()!.id).subscribe({
         next: (data: CommentsType | DefaultResponseType) => {
-          if ((data as DefaultResponseType).error) {
-            this._snackBar.open((data as DefaultResponseType).message);
-            throw new Error((data as DefaultResponseType).message);
-          }
-          count = ((data as CommentsType).allCount < this.commentCount) ? (data as CommentsType).allCount : this.commentCount;
+          // определяем количество выводимых комментариев
+          const count: number = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
 
           (data as CommentsType).comments = (data as CommentsType).comments.slice(0, count);
-          this.comments.set(data as CommentsType);
+
+          if (this.isLogged()) {
+            // определяем реакции конкретного абонента на эту статью
+            this.commentsServices.getArticleCommentActions(this.article()!.id).subscribe({
+              next: (actions: { comment: string, action: ActionType }[] | DefaultResponseType) => {
+                (data as CommentsType).comments = ((data as CommentsType).comments).map((item: CommentType) => {
+                  const newComment = {...item};
+                  newComment.action = (actions as {
+                    comment: string,
+                    action: ActionType
+                  }[]).find(a => a.comment === item.id)?.action
+
+                  return newComment;
+
+                })
+                this.comments.set(data as CommentsType);
+                console.log(this.comments());
+                //this.comments.set(newComments.allCount =(data as CommentsType).allCount);
+                // console.log(newComments);
+                console.log((actions as { comment: string, action: ActionType }[]));
+                console.log(((data as CommentsType).comments));
+              },
+              error: (error: HttpErrorResponse): void => {
+                if (error.error.message !== "Failed to fetch") {
+                  this._snackBar.open(error.error.message);
+                } else {
+                  this._snackBar.open('Нет ответа от системы ');
+                }
+              }
+            })
+          } else {
+            this.comments.set(data as CommentsType);
+          }
+
           console.log(this.comments());
         },
-        error: (): void => {
-          this._snackBar.open('Нет ответа от системы ');
+        error: (error: HttpErrorResponse): void => {
+          if (error.error.message !== "Failed to fetch") {
+            this._snackBar.open(error.error.message);
+          } else {
+            this._snackBar.open('Нет ответа от системы ');
+          }
         }
       })
     }
@@ -101,15 +137,19 @@ export class Article implements OnInit {
       this.commentsServices.addComment(this.article()!.id, this.articleText)
         .subscribe({
           next: (data: DefaultResponseType) => {
-            this._snackBar.open(data.message);
-            this.articleText = "";
             this.getComments();
+            this._snackBar.open(data.message);
           },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
+          error: (error: HttpErrorResponse): void => {
+            if (error.error.message !== "Failed to fetch") {
+              this._snackBar.open(error.error.message);
+            } else {
+              this._snackBar.open('Нет ответа от системы ');
+            }
           }
         })
     }
+    this.articleText = "";
   }
 
   //Расширение списка комментариев
@@ -117,4 +157,39 @@ export class Article implements OnInit {
     this.commentCount += 10;
     this.getComments();
   }
+
+  //Пожаловаться
+  action(id: string, action: ActionType) {
+
+    console.log(id, action);
+
+    if (this.isLogged()) {
+      if (id != "" && action) {
+        this.commentsServices.addAction(id, action)
+          .subscribe({
+              next: () => {
+                if (action === ActionType.violate) {
+                  this._snackBar.open("Жалоба отправлена");
+                } else {
+                  this._snackBar.open("Ваш голос учтен");
+                  this.getComments();
+                }
+              },
+
+              error: (error: HttpErrorResponse): void => {
+                if (error.error.message !== "Failed to fetch") {
+                  this._snackBar.open(error.error.message);
+                } else {
+                  this._snackBar.open('Нет ответа от системы ');
+                }
+              }
+            }
+          )
+      }
+    } else {
+      this._snackBar.open('Для выполнения действия нужно авторизироваться');
+    }
+  }
+
+  protected readonly ActionType = ActionType;
 }

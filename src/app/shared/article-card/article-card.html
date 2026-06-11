@@ -1,0 +1,11 @@
+<div class="main-blog-card">
+  <div>
+    <div class="blog-card-img">
+      <img src='../../../assets/images/{{article.image}}' alt="">
+      <button class="button blog">{{ article.category }}</button>
+    </div>
+    <div class="card-title">{{ article.title }}</div>
+    <div class="blog-card-info">{{ article.description }}</div>
+  </div>
+  <a [routerLink]="['/article']" [queryParams]="{url: article.url}">Читать дальше</a>
+</div>
