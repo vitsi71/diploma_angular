@@ -5,6 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from '../../../shared/services/auth.service';
 import {AuthResponseType} from '../../../../types/auth-response.type';
 import {DefaultResponseType} from '../../../../types/default-response.type';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-login',
@@ -62,8 +63,12 @@ export class Login {
             this._snackBar.open('Вы успешно авторизовались');
             this.router.navigate(['/']);
           },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
+          error: (error: HttpErrorResponse): void => {
+            if (error.error.message !== "Failed to fetch") {
+              this._snackBar.open(error.error.message);
+            } else {
+              this._snackBar.open('Нет ответа от системы ');
+            }
           }
 
         });

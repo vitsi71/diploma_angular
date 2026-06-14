@@ -1,4 +1,4 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {ArticleType, CommentsType, CommentType} from '../../../types/article.type';
 import {ArticleServices} from '../../shared/services/article.services';
 import {ActivatedRoute, Params} from '@angular/router';
@@ -9,6 +9,7 @@ import {AuthService} from "../../shared/services/auth.service";
 import {CommentsServices} from '../../shared/services/comments.services';
 import {HttpErrorResponse} from '@angular/common/http';
 import {ActionType} from '../../../types/action.type';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-article',
@@ -16,7 +17,7 @@ import {ActionType} from '../../../types/action.type';
   templateUrl: './article.html',
   styleUrl: './article.scss',
 })
-export class Article implements OnInit {
+export class Article implements OnInit, OnDestroy {
 
   article: WritableSignal<ArticleType | null> = signal<ArticleType | null>(null);
   articleRelated: WritableSignal<ArticleCardType []> = signal<ArticleCardType[]>([]);
@@ -25,6 +26,8 @@ export class Article implements OnInit {
   articleText: string = "";
   url: string = '';
   commentCount: number = 0;
+
+  private destroy$: Subject<void> = new Subject<void>();
 
   constructor(private articleServices: ArticleServices,
               private commentsServices: CommentsServices,
@@ -40,38 +43,52 @@ export class Article implements OnInit {
       this.isLogged.set(isLoggedIn);
     })
 
-    this.activatedRoute.queryParams.subscribe((params:Params):void => {
-      if (params && params['url']) {
-        this.url = params['url'];
+    this.activatedRoute.queryParams.pipe(takeUntil(this.destroy$))
+      .subscribe((params: Params): void => {
+        if (params && params['url']) {
+          this.url = params['url'];
 //запрос полного описания статьи
-        this.articleServices.getArticle(this.url).subscribe({
-          next: (data: ArticleType | DefaultResponseType) => {
-            if ((data as DefaultResponseType).error) {
-              this._snackBar.open((data as DefaultResponseType).message);
-              throw new Error((data as DefaultResponseType).message);
+          this.articleServices.getArticle(this.url).subscribe({
+            next: (data: ArticleType | DefaultResponseType) => {
+              if ((data as DefaultResponseType).error) {
+                this._snackBar.open((data as DefaultResponseType).message);
+                throw new Error((data as DefaultResponseType).message);
+              }
+              this.article.set(data as ArticleType);
+              this.getComments();
+            },
+            error: (error: HttpErrorResponse): void => {
+              if (error.error.message !== "Failed to fetch") {
+                this._snackBar.open(error.error.message);
+              } else {
+                this._snackBar.open('Нет ответа от системы ');
+              }
             }
-            this.article.set(data as ArticleType);
-            this.getComments();
-          },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
-          }
-        });
+          });
 // запрос сопутствующих статей
-        this.articleServices.getArticlesRelated(this.url).subscribe({
-          next: (data: ArticleCardType[] | DefaultResponseType) => {
-            if ((data as DefaultResponseType).error) {
-              this._snackBar.open((data as DefaultResponseType).message);
-              throw new Error((data as DefaultResponseType).message);
+          this.articleServices.getArticlesRelated(this.url).subscribe({
+            next: (data: ArticleCardType[] | DefaultResponseType) => {
+              if ((data as DefaultResponseType).error) {
+                this._snackBar.open((data as DefaultResponseType).message);
+                throw new Error((data as DefaultResponseType).message);
+              }
+              this.articleRelated.set(data as ArticleCardType[]);
+            },
+            error: (error: HttpErrorResponse): void => {
+              if (error.error.message !== "Failed to fetch") {
+                this._snackBar.open(error.error.message);
+              } else {
+                this._snackBar.open('Нет ответа от системы ');
+              }
             }
-            this.articleRelated.set(data as ArticleCardType[]);
-          },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
-          }
-        })
-      }
-    });
+          })
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   // запрос комментариев к найденой статье
@@ -81,47 +98,38 @@ export class Article implements OnInit {
       this.commentsServices.getComments(this.article()!.id).subscribe({
         next: (data: CommentsType | DefaultResponseType) => {
           // если комментарии к статье есть
-          if ((data as CommentsType).comments.length > 0){
+          if ((data as CommentsType).comments.length > 0) {
             // определяем количество выводимых комментариев
             const count: number = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
-          (data as CommentsType).allCount = (data as CommentsType).comments.length;
-          (data as CommentsType).comments = (data as CommentsType).comments.slice(0, count);
+            (data as CommentsType).allCount = (data as CommentsType).comments.length;
+            (data as CommentsType).comments = (data as CommentsType).comments.slice(0, count);
 
-          if (this.isLogged()) {
-            // определяем реакции конкретного абонента на эту статью
-            this.commentsServices.getArticleCommentActions(this.article()!.id).subscribe({
-              next: (actions: { comment: string, action: ActionType }[] | DefaultResponseType) => {
-                (data as CommentsType).comments = ((data as CommentsType).comments).map((item: CommentType) => {
-                  const newComment = {...item};
-                  newComment.action = (actions as {
-                    comment: string,
-                    action: ActionType
-                  }[]).find(a => a.comment === item.id)?.action
+            if (this.isLogged()) {
+              // определяем реакции конкретного абонента на эту статью
+              this.commentsServices.getArticleCommentActions(this.article()!.id).subscribe({
+                next: (actions: { comment: string, action: ActionType }[] | DefaultResponseType) => {
+                  (data as CommentsType).comments = ((data as CommentsType).comments).map((item: CommentType): CommentType => {
+                    const newComment = {...item};
+                    newComment.action = (actions as {comment: string,action: ActionType} [])
+                      .find((a:{comment: string,action: ActionType}):boolean => a.comment === item.id)?.action
 
-                  return newComment;
+                    return newComment;
 
-                })
-                this.comments.set(data as CommentsType);
-                // console.log(this.comments());
-                //this.comments.set(newComments.allCount =(data as CommentsType).allCount);
-                // console.log(newComments);
-                // console.log((actions as { comment: string, action: ActionType }[]));
-                // console.log(((data as CommentsType).comments));
-              },
-              error: (error: HttpErrorResponse): void => {
-                if (error.error.message !== "Failed to fetch") {
-                  this._snackBar.open(error.error.message);
-                } else {
-                  this._snackBar.open('Нет ответа от системы ');
+                  })
+                  this.comments.set(data as CommentsType);
+                },
+                error: (error: HttpErrorResponse): void => {
+                  if (error.error.message !== "Failed to fetch") {
+                    this._snackBar.open(error.error.message);
+                  } else {
+                    this._snackBar.open('Нет ответа от системы ');
+                  }
                 }
-              }
-            })
-          } else {
-            this.comments.set(data as CommentsType);
+              })
+            } else {
+              this.comments.set(data as CommentsType);
+            }
           }
-
-         // console.log(this.comments());
-        }
         },
         error: (error: HttpErrorResponse): void => {
           if (error.error.message !== "Failed to fetch") {

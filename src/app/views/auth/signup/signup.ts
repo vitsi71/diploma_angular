@@ -5,6 +5,7 @@ import {AuthService} from '../../../shared/services/auth.service';
 import {Router} from '@angular/router';
 import {AuthResponseType} from '../../../../types/auth-response.type';
 import {DefaultResponseType} from '../../../../types/default-response.type';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-signup',
@@ -72,8 +73,12 @@ export class Signup {
             this._snackBar.open('Вы успешно зарегистрировались');
             this.router.navigate(['/']);
           },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
+          error: (error: HttpErrorResponse): void => {
+            if (error.error.message !== "Failed to fetch") {
+              this._snackBar.open(error.error.message);
+            } else {
+              this._snackBar.open('Нет ответа от системы ');
+            }
           }
 
         });

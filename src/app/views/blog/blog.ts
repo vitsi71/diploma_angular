@@ -17,7 +17,7 @@ import {catchError, distinctUntilChanged, of, Subject, switchMap, takeUntil} fro
 })
 export class Blog implements OnInit, OnDestroy {
 
-  private destroy$ = new Subject<void>();
+  private destroy$:Subject<void> = new Subject<void>();
 
   categories: WritableSignal<CategoryType[]> = signal<CategoryType[]>([]);
   articlesBlog: WritableSignal<ArticlesType> = signal<ArticlesType>({} as ArticlesType);
@@ -33,9 +33,8 @@ export class Blog implements OnInit, OnDestroy {
 
   ngOnInit() {
 
-    this.otherServices.getCategories().pipe(
-      takeUntil(this.destroy$)
-    ).subscribe({
+    this.otherServices.getCategories()
+    .subscribe({
 
       next: (data: CategoryType[] | DefaultResponseType) => {
         console.log(data as CategoryType[]);
@@ -90,7 +89,6 @@ export class Blog implements OnInit, OnDestroy {
   }
 
   categoryCardSelect(category: string) {
-    console.log(this.categories());
     let cat: CategoryType | undefined = this.categories().find(item => item.name === category);
     console.log(cat);
     if (cat !== undefined) {
@@ -102,9 +100,8 @@ export class Blog implements OnInit, OnDestroy {
 
 
   getArticles() {
-    this.articleServices.getArticles(this.params).pipe(
-      takeUntil(this.destroy$)
-    ).subscribe({
+    this.articleServices.getArticles(this.params)
+    .subscribe({
       next: (data: ArticlesType | DefaultResponseType) => {
         console.log(data as ArticlesType);
         this.articlesBlog.set(data as ArticlesType);

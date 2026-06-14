@@ -8,6 +8,7 @@ import {MatSnackBar} from '@angular/material/snack-bar';
 import {ArticleServices} from '../../shared/services/article.services';
 import {ArticleCardType} from '../../../types/article.type';
 import {AuthService} from '../../shared/services/auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-main',
@@ -46,7 +47,7 @@ export class Main implements OnInit {
   ngOnInit() {
     this.articleServices.getArticlesTop()
       .subscribe({
-        next: (data:ArticleCardType[] | DefaultResponseType): void => {
+        next: (data: ArticleCardType[] | DefaultResponseType): void => {
           if ((data as DefaultResponseType).error) {
             this._snackBar.open((data as DefaultResponseType).message);
             this.popupErr.set(true);
@@ -55,8 +56,12 @@ export class Main implements OnInit {
 
           this.articleTop.set(data as ArticleCardType[]);
         },
-        error: (): void => {
-          this._snackBar.open('Нет ответа от системы ');
+        error: (error: HttpErrorResponse): void => {
+          if (error.error.message !== "Failed to fetch") {
+            this._snackBar.open(error.error.message);
+          } else {
+            this._snackBar.open('Нет ответа от системы ');
+          }
         }
       });
   }
@@ -97,9 +102,9 @@ export class Main implements OnInit {
 
   popupOpen(serv: ServiceName) {
     this.popupForm.get('service')?.setValue(serv);
-    if(this.authService.getIsLoggedIn()){
+    if (this.authService.getIsLoggedIn()) {
       this.popupForm.get('nameUser')?.setValue(this.authService.getUserName());
-    }else{
+    } else {
       this.popupForm.get('nameUser')?.setValue('');
     }
     this.popup = true;
@@ -129,9 +134,13 @@ export class Main implements OnInit {
             this.popupErr.set(false);
             this.respPopup.set(true);
           },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
+          error: (error: HttpErrorResponse): void => {
             this.popupErr.set(true);
+            if (error.error.message !== "Failed to fetch") {
+              this._snackBar.open(error.error.message);
+            } else {
+              this._snackBar.open('Нет ответа от системы ');
+            }
           }
         });
     }

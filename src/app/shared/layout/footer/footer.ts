@@ -4,6 +4,7 @@ import {OtherServices} from '../../services/other.services';
 import {DefaultResponseType} from '../../../../types/default-response.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from '../../services/auth.service';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-footer',
@@ -57,9 +58,14 @@ popupClose(){
             this.popupErr.set(false);
             this.respPopup.set(true);
           },
-          error: (): void => {
-            this._snackBar.open('Нет ответа от системы ');
+          error: (error: HttpErrorResponse): void => {
             this.popupErr.set(true);
+            if (error.error.message !== "Failed to fetch") {
+              this._snackBar.open(error.error.message);
+            } else {
+              this._snackBar.open('Нет ответа от системы ');
+            }
+
           }
         });
     }

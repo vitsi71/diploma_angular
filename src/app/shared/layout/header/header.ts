@@ -4,6 +4,7 @@ import {DefaultResponseType} from '../../../../types/default-response.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {UserResponseType} from '../../../../types/user-response.type';
+import {HttpErrorResponse} from '@angular/common/http';
 
 @Component({
   selector: 'app-header',
@@ -44,8 +45,12 @@ export class Header implements OnInit {
             }
           }
         },
-        error: (): void => {
-          this._snackBar.open('Нет ответа от системы ');
+        error: (error: HttpErrorResponse): void => {
+          if (error.error.message !== "Failed to fetch") {
+            this._snackBar.open(error.error.message);
+          } else {
+            this._snackBar.open('Нет ответа от системы ');
+          }
         }
 
       })
