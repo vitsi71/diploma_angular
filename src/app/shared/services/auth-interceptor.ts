@@ -5,7 +5,7 @@ import {Router} from '@angular/router';
 import {AuthService} from './auth.service';
 import {AuthResponseType} from '../../../types/auth-response.type';
 import {DefaultResponseType} from '../../../types/default-response.type';
-// import {LoaderService} from '../../shared/services/loader.service';
+import {LoaderService} from './loader.service';
 
 // чтобы interceptor заработал в app.module в секцию providers: нужно добавить
 // provideHttpClient(withInterceptors([authInterceptor])),
@@ -14,11 +14,11 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
   // в запросы в заголовок подставляем accessToken
   const authService: AuthService = inject(AuthService);
   const router: Router = inject(Router);
-  // const loaderService: LoaderService = inject(LoaderService);
+  const loaderService: LoaderService = inject(LoaderService);
   const tokens: { accessToken: string | null, refreshToken: string | null } = authService.getTokens();
-  // loaderService.show();//включаем индикатор загрузки с каждым запросом
+  loaderService.show();//включаем индикатор загрузки с каждым запросом
   if (tokens && tokens.accessToken) {
-    const authReq = req.clone({
+    const authReq:HttpRequest<any> = req.clone({
       headers: req.headers.set('x-auth', tokens.accessToken)
     });
     // получаем ответ
@@ -32,17 +32,18 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
           }
           return throwError((): HttpErrorResponse => err)
         }),
-        // finalize(() => loaderService.hide()) //выключаем индикатор загрузки не зависимо от результатов запроса
+        finalize(() => loaderService.hide()) //выключаем индикатор загрузки не зависимо от результатов запроса
 
       );
   }
   return next(req)
-    // .pipe(finalize(() => loaderService.hide()));//выключаем индикатор загрузки не зависимо от результатов запроса
+    .pipe(finalize(():void => loaderService.hide()));//выключаем индикатор загрузки не зависимо от результатов запроса
 };
 
 
 // token просрочен
-const hendle401Error = (req: HttpRequest<any>, next: HttpHandlerFn, authService: AuthService, router: Router): Observable<HttpEvent<any>> => {
+const hendle401Error = (req: HttpRequest<AuthResponseType | DefaultResponseType>,
+                        next: HttpHandlerFn, authService: AuthService, router: Router): Observable<HttpEvent<AuthResponseType | DefaultResponseType>> => {
 //запрашиваем новые через refresh
   return authService.refresh()
     .pipe(

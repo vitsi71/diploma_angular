@@ -19,13 +19,13 @@ import {Subject, takeUntil} from 'rxjs';
 })
 export class Article implements OnInit, OnDestroy {
 
-  article: WritableSignal<ArticleType | null> = signal<ArticleType | null>(null);
+  article: WritableSignal<ArticleType> = signal<ArticleType>({} as ArticleType);
   articleRelated: WritableSignal<ArticleCardType []> = signal<ArticleCardType[]>([]);
   isLogged: WritableSignal<boolean> = signal<boolean>(false);
   comments: WritableSignal<CommentsType> = signal<CommentsType>({"allCount": 0, "comments": []});
   articleText: string = "";
   url: string = '';
-  commentCount: number = 0;
+  commentCount: number = 3;
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -36,12 +36,13 @@ export class Article implements OnInit, OnDestroy {
               private _snackBar: MatSnackBar) {
   }
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.commentCount = 3;
     this.isLogged.set(this.authService.getIsLoggedIn());
-    this.authService.isLogged$.subscribe((isLoggedIn: boolean) => {
-      this.isLogged.set(isLoggedIn);
-    })
+    this.authService.isLogged$.pipe(takeUntil(this.destroy$))
+      .subscribe((isLoggedIn: boolean): void => {
+        this.isLogged.set(isLoggedIn);
+      })
 
     this.activatedRoute.queryParams.pipe(takeUntil(this.destroy$))
       .subscribe((params: Params): void => {
@@ -49,11 +50,7 @@ export class Article implements OnInit, OnDestroy {
           this.url = params['url'];
 //запрос полного описания статьи
           this.articleServices.getArticle(this.url).subscribe({
-            next: (data: ArticleType | DefaultResponseType) => {
-              if ((data as DefaultResponseType).error) {
-                this._snackBar.open((data as DefaultResponseType).message);
-                throw new Error((data as DefaultResponseType).message);
-              }
+            next: (data: ArticleType | DefaultResponseType):void => {
               this.article.set(data as ArticleType);
               this.getComments();
             },
@@ -67,12 +64,8 @@ export class Article implements OnInit, OnDestroy {
           });
 // запрос сопутствующих статей
           this.articleServices.getArticlesRelated(this.url).subscribe({
-            next: (data: ArticleCardType[] | DefaultResponseType) => {
-              if ((data as DefaultResponseType).error) {
-                this._snackBar.open((data as DefaultResponseType).message);
-                throw new Error((data as DefaultResponseType).message);
-              }
-              this.articleRelated.set(data as ArticleCardType[]);
+            next: (data: ArticleCardType[] | DefaultResponseType):void => {
+               this.articleRelated.set(data as ArticleCardType[]);
             },
             error: (error: HttpErrorResponse): void => {
               if (error.error.message !== "Failed to fetch") {
@@ -92,26 +85,26 @@ export class Article implements OnInit, OnDestroy {
   }
 
   // запрос комментариев к найденой статье
-  getComments() {
-    if (this.article()!.id) {
+  getComments():void {
+    if (this.article().id) {
       let count: number = 0;
-      this.commentsServices.getComments(this.article()!.id).subscribe({
-        next: (data: CommentsType | DefaultResponseType) => {
+      this.commentsServices.getComments(this.article().id).subscribe({
+        next: (data: CommentsType | DefaultResponseType):void => {
           // если комментарии к статье есть
           if ((data as CommentsType).comments.length > 0) {
             // определяем количество выводимых комментариев
-            const count: number = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
+            count = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
             (data as CommentsType).allCount = (data as CommentsType).comments.length;
             (data as CommentsType).comments = (data as CommentsType).comments.slice(0, count);
 
             if (this.isLogged()) {
               // определяем реакции конкретного абонента на эту статью
-              this.commentsServices.getArticleCommentActions(this.article()!.id).subscribe({
-                next: (actions: { comment: string, action: ActionType }[] | DefaultResponseType) => {
+              this.commentsServices.getArticleCommentActions(this.article().id).subscribe({
+                next: (actions: { comment: string, action: ActionType }[] | DefaultResponseType):void => {
                   (data as CommentsType).comments = ((data as CommentsType).comments).map((item: CommentType): CommentType => {
                     const newComment = {...item};
-                    newComment.action = (actions as {comment: string,action: ActionType} [])
-                      .find((a:{comment: string,action: ActionType}):boolean => a.comment === item.id)?.action
+                    newComment.action = (actions as { comment: string, action: ActionType } [])
+                      .find((a: { comment: string, action: ActionType }): boolean => a.comment === item.id)?.action
 
                     return newComment;
 
@@ -143,11 +136,11 @@ export class Article implements OnInit, OnDestroy {
   }
 
   //Добавление комментария
-  addComment() {
-    if (this.article()!.id && this.articleText) {
-      this.commentsServices.addComment(this.article()!.id, this.articleText)
+  addComment():void {
+    if (this.article().id && this.articleText) {
+      this.commentsServices.addComment(this.article().id, this.articleText)
         .subscribe({
-          next: (data: DefaultResponseType) => {
+          next: (data: DefaultResponseType):void => {
             this.getComments();
             this._snackBar.open(data.message);
           },
@@ -164,16 +157,13 @@ export class Article implements OnInit, OnDestroy {
   }
 
   //Расширение списка комментариев
-  addViewsComment() {
+  addViewsComment():void {
     this.commentCount += 10;
     this.getComments();
   }
 
   //Пожаловаться
-  action(id: string, action: ActionType) {
-
-    console.log(id, action);
-
+  action(id: string, action: ActionType):void {
     if (this.isLogged()) {
       if (id != "" && action) {
         this.commentsServices.addAction(id, action)

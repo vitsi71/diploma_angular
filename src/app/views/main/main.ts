@@ -1,4 +1,4 @@
-import {Component, inject, OnInit, signal, ViewChild, WritableSignal} from '@angular/core';
+import {Component, inject, OnInit, signal, WritableSignal} from '@angular/core';
 import {OwlOptions} from 'ngx-owl-carousel-o';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {ServiceName, ServicesType} from '../../../types/services.type';
@@ -25,7 +25,7 @@ export class Main implements OnInit {
   articleTop: WritableSignal<ArticleCardType[]> = signal<ArticleCardType[]>([]);
 
 
-  protected readonly ServiceName = ServiceName;
+  protected readonly ServiceName: typeof ServiceName = ServiceName;
 
   private authService: AuthService = inject(AuthService);
   private articleServices: ArticleServices = inject(ArticleServices);
@@ -39,21 +39,19 @@ export class Main implements OnInit {
     phoneUser: ['', [Validators.required]],
   });
 
-  servicesType: { key: string; value: string }[] = Object.keys(ServicesType).map(key => ({
+  // преобразование объекта перечесления в массив
+  servicesType: { key: string; value: string }[] = Object.keys(ServicesType).map((key: string): {
+    key: string;
+    value: string
+  } => ({
     key: key,
     value: ServicesType[key as keyof typeof ServicesType]
   }));
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.articleServices.getArticlesTop()
       .subscribe({
         next: (data: ArticleCardType[] | DefaultResponseType): void => {
-          if ((data as DefaultResponseType).error) {
-            this._snackBar.open((data as DefaultResponseType).message);
-            this.popupErr.set(true);
-            throw new Error((data as DefaultResponseType).message);
-          }
-
           this.articleTop.set(data as ArticleCardType[]);
         },
         error: (error: HttpErrorResponse): void => {
@@ -66,6 +64,7 @@ export class Main implements OnInit {
       });
   }
 
+// настройки для карусели баннеров
   mainSliderOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -82,6 +81,8 @@ export class Main implements OnInit {
     },
     nav: false
   };
+
+  // настройки для карусели отзывов
   reviewsSliderOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
@@ -99,10 +100,10 @@ export class Main implements OnInit {
     nav: false
   };
 
-
-  popupOpen(serv: ServiceName) {
+// открытие окна заявки на услугу
+  popupOpen(serv: ServiceName): void {
     this.popupForm.get('service')?.setValue(serv);
-    if (this.authService.getIsLoggedIn()) {
+    if (this.authService.getIsLoggedIn()) { // если авторизован - имя заполняется автоматически
       this.popupForm.get('nameUser')?.setValue(this.authService.getUserName());
     } else {
       this.popupForm.get('nameUser')?.setValue('');
@@ -110,39 +111,37 @@ export class Main implements OnInit {
     this.popup = true;
   }
 
-  popupClose() {
+  // закрытие окна заявки
+  popupClose(): void {
     this.popup = false;
     this.respPopup.set(false);
   }
 
+  // получение значения из перечисления услуг по ключу
   getServiceByKey(key: string): string | undefined {
     return ServicesType[key as keyof typeof ServicesType];
   }
 
-  sendRequest() {
-    const service = this.getServiceByKey(this.popupForm.value.service);
-
+  // отправка заявки на услугу
+  sendRequest(): void {
+    const service: string | undefined = this.getServiceByKey(this.popupForm.value.service);
     if (this.popupForm.valid) {
       this.otherServices.request(this.popupForm.value.nameUser, this.popupForm.value.phoneUser, service)
         .subscribe({
-          next: (data: DefaultResponseType): void => {
-            if (data.error) {
-              this._snackBar.open(data.message);
+            next: (): void => {
+              this.popupErr.set(false);
+              this.respPopup.set(true);
+            },
+            error: (error: HttpErrorResponse): void => {
               this.popupErr.set(true);
-              throw new Error(data.message);
-            }
-            this.popupErr.set(false);
-            this.respPopup.set(true);
-          },
-          error: (error: HttpErrorResponse): void => {
-            this.popupErr.set(true);
-            if (error.error.message !== "Failed to fetch") {
-              this._snackBar.open(error.error.message);
-            } else {
-              this._snackBar.open('Нет ответа от системы ');
+              if (error.error.message !== "Failed to fetch") {
+                this._snackBar.open(error.error.message);
+              } else {
+                this._snackBar.open('Нет ответа от системы ');
+              }
             }
           }
-        });
+        );
     }
   }
 

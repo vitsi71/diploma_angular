@@ -12,9 +12,6 @@ export class ArticleServices {
 
   private http:HttpClient = inject(HttpClient);
 
-  isDefaultResponse(data: any): data is DefaultResponseType {
-    return data && typeof data === 'object' && 'error' in data && 'message' in data;
-  }
 
   getArticlesTop(): Observable< ArticleCardType[] | DefaultResponseType> {
        return this.http.get<ArticleCardType[] | DefaultResponseType>(environment.api + 'articles/top');

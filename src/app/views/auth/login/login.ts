@@ -17,7 +17,7 @@ export class Login {
 
   private _snackBar: MatSnackBar = inject(MatSnackBar);
   private fb: FormBuilder = inject(FormBuilder);
-  textPass:boolean=true;
+  textPass: boolean = true;
 
   loginForm: FormGroup = this.fb.group({
     email: ['', [Validators.email, Validators.required]],
@@ -36,8 +36,8 @@ export class Login {
     return this.loginForm.get('password');
   }
 
-  viewPass(){
-    this.textPass=!this.textPass;
+  viewPass(): void {
+    this.textPass = !this.textPass;
   }
 
   login(): void {
@@ -45,10 +45,7 @@ export class Login {
       this.authService.login(this.loginForm.value.email, this.loginForm.value.password, this.loginForm.value.rememberMe)
         .subscribe({
           next: (data: AuthResponseType | DefaultResponseType): void => {
-            let error = null;
-            if ((data as DefaultResponseType).error !== undefined) {
-              error = (data as DefaultResponseType).message;
-            }
+            let error: string | null = null;
 
             const loginResponse = data as AuthResponseType;
             if (!loginResponse.accessToken || !loginResponse.refreshToken || !loginResponse.userId) {
@@ -70,7 +67,6 @@ export class Login {
               this._snackBar.open('Нет ответа от системы ');
             }
           }
-
         });
     }
   }

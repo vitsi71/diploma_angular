@@ -6,7 +6,7 @@ export enum ServiceName {
   copywriting="copywriting"
 }
 export enum ServicesType {
-website="Создоние сайтов",
+website="Создание сайтов",
   promotion="Продвижение",
   marketing="Реклама",
   copywriting="Копирайтинг"

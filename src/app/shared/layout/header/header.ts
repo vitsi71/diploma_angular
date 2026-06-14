@@ -1,10 +1,11 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
 import {AuthService} from '../../services/auth.service';
 import {DefaultResponseType} from '../../../../types/default-response.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {Router} from '@angular/router';
 import {UserResponseType} from '../../../../types/user-response.type';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -12,37 +13,39 @@ import {HttpErrorResponse} from '@angular/common/http';
   templateUrl: './header.html',
   styleUrl: './header.scss',
 })
-export class Header implements OnInit {
+export class Header implements OnInit, OnDestroy {
 
   isLogged: WritableSignal<boolean> = signal<boolean>(false);
   userName: WritableSignal<string> = signal<string>("");
+  private destroy$:Subject<void> = new Subject<void>();
 
   constructor(private _snackBar: MatSnackBar, private authService: AuthService, private router: Router) {
     this.isLogged.set(this.authService.getIsLoggedIn());
     this.getUserName();
   }
 
-  ngOnInit() {
-    this.authService.isLogged$.subscribe((isLoggedIn: boolean) => {
+  ngOnInit(): void {
+    this.authService.isLogged$.pipe(takeUntil(this.destroy$))
+      .subscribe((isLoggedIn: boolean) => {
       this.isLogged.set(isLoggedIn);
       this.getUserName();
     })
   }
 
-  private getUserName() {
+  ngOnDestroy(): void {
+    this.destroy$.next();   // Эмит сигнала завершения
+    this.destroy$.complete(); // Освобождение ресурсов Subject
+  }
+
+  private getUserName(): void {
     if (this.isLogged()) {
       this.authService.getUser().subscribe({
         next: (data: UserResponseType | DefaultResponseType) => {
-
-          if ((data as DefaultResponseType).error) {
-            this._snackBar.open((data as DefaultResponseType).message);
+          if ((data as UserResponseType).name !== undefined) {
+            this.userName.set((data as UserResponseType).name);
+            this.authService.setUserName((data as UserResponseType).name);
           } else {
-            if ((data as UserResponseType).name !== undefined) {
-              this.userName.set((data as UserResponseType).name);
-              this.authService.setUserName((data as UserResponseType).name);
-            } else {
-              this.userName.set("Гость");;
-            }
+            this.userName.set("Гость");
           }
         },
         error: (error: HttpErrorResponse): void => {
@@ -52,17 +55,16 @@ export class Header implements OnInit {
             this._snackBar.open('Нет ответа от системы ');
           }
         }
-
       })
     }
   }
 
-  logout() {
+  logout(): void {
     this.authService.logout().subscribe();
     this.userClear();
   }
 
-  private userClear() {
+  private userClear(): void {
     this.authService.removeTokens();
     this.authService.userId = null;
     this.authService.setUserName(null)
