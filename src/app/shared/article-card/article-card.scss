@@ -6,6 +6,9 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+.blog-card-body {
+  height: 550px;
+  overflow: hidden;
 
   .blog-card-img {
     border-radius: 5px;
@@ -35,7 +38,7 @@
   .blog-card-info {
     padding-right: 4px;
   }
-
+}
   a {
     color: $second-color;
     font-size: 16px;

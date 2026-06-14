@@ -1,10 +1,9 @@
 import {inject, Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {DefaultResponseType} from '../../../types/default-response.type';
 import {environment} from '../../../environments/environment';
-import {ArticleCardType} from '../../../types/articleCard.type';
-import {ArticleType} from '../../../types/article.type';
+import {ArticleCardType, ArticlesType,ArticleType} from '../../../types/article.type';
 
 @Injectable({
   providedIn: 'root',
@@ -12,6 +11,10 @@ import {ArticleType} from '../../../types/article.type';
 export class ArticleServices {
 
   private http:HttpClient = inject(HttpClient);
+
+  isDefaultResponse(data: any): data is DefaultResponseType {
+    return data && typeof data === 'object' && 'error' in data && 'message' in data;
+  }
 
   getArticlesTop(): Observable< ArticleCardType[] | DefaultResponseType> {
        return this.http.get<ArticleCardType[] | DefaultResponseType>(environment.api + 'articles/top');
@@ -23,6 +26,11 @@ export class ArticleServices {
   }
   getArticlesRelated(url:string): Observable< ArticleCardType[] | DefaultResponseType> {
     return this.http.get<ArticleCardType[] | DefaultResponseType>(environment.api + 'articles/related/'+url);
+
+  }
+
+  getArticles(params:HttpParams): Observable< ArticlesType | DefaultResponseType> {
+    return this.http.get<ArticlesType | DefaultResponseType>(environment.api + 'articles',{params});
 
   }
 

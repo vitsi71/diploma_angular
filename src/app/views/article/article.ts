@@ -1,9 +1,9 @@
 import {Component, OnInit, signal, WritableSignal} from '@angular/core';
 import {ArticleType, CommentsType, CommentType} from '../../../types/article.type';
 import {ArticleServices} from '../../shared/services/article.services';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Params} from '@angular/router';
 import {DefaultResponseType} from '../../../types/default-response.type';
-import {ArticleCardType} from '../../../types/articleCard.type';
+import {ArticleCardType} from '../../../types/article.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from "../../shared/services/auth.service";
 import {CommentsServices} from '../../shared/services/comments.services';
@@ -40,7 +40,7 @@ export class Article implements OnInit {
       this.isLogged.set(isLoggedIn);
     })
 
-    this.activatedRoute.queryParams.subscribe(params => {
+    this.activatedRoute.queryParams.subscribe((params:Params):void => {
       if (params && params['url']) {
         this.url = params['url'];
 //запрос полного описания статьи
@@ -80,9 +80,11 @@ export class Article implements OnInit {
       let count: number = 0;
       this.commentsServices.getComments(this.article()!.id).subscribe({
         next: (data: CommentsType | DefaultResponseType) => {
-          // определяем количество выводимых комментариев
-          const count: number = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
-
+          // если комментарии к статье есть
+          if ((data as CommentsType).comments.length > 0){
+            // определяем количество выводимых комментариев
+            const count: number = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
+          (data as CommentsType).allCount = (data as CommentsType).comments.length;
           (data as CommentsType).comments = (data as CommentsType).comments.slice(0, count);
 
           if (this.isLogged()) {
@@ -100,11 +102,11 @@ export class Article implements OnInit {
 
                 })
                 this.comments.set(data as CommentsType);
-                console.log(this.comments());
+                // console.log(this.comments());
                 //this.comments.set(newComments.allCount =(data as CommentsType).allCount);
                 // console.log(newComments);
-                console.log((actions as { comment: string, action: ActionType }[]));
-                console.log(((data as CommentsType).comments));
+                // console.log((actions as { comment: string, action: ActionType }[]));
+                // console.log(((data as CommentsType).comments));
               },
               error: (error: HttpErrorResponse): void => {
                 if (error.error.message !== "Failed to fetch") {
@@ -118,7 +120,8 @@ export class Article implements OnInit {
             this.comments.set(data as CommentsType);
           }
 
-          console.log(this.comments());
+         // console.log(this.comments());
+        }
         },
         error: (error: HttpErrorResponse): void => {
           if (error.error.message !== "Failed to fetch") {

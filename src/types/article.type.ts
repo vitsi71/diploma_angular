@@ -1,5 +1,21 @@
 import {ActionType} from './action.type';
 
+export interface ArticleCardType {
+  id:string,
+  title:string,
+  description:string,
+  image:string,
+  date:Date,
+  category:string,
+  url:string
+}
+
+export interface ArticlesType {
+  count: number,
+  pages: number,
+  items:ArticleCardType []
+}
+
 export interface ArticleType {
   id:string,
   text:string,

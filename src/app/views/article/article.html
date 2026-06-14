@@ -77,7 +77,7 @@
           </div>
         }
 
-        @if (comments().comments.length != 0) {
+        @if (comments().allCount != 0) {
           <div class="article-comments">
             @for (comment of comments().comments; track $index){
             <div class="comment">
@@ -131,7 +131,7 @@
             </div>
             }
           </div>
-          @if(comments().comments.length > commentCount){
+          @if(comments().allCount > commentCount){
 
             <a class="comment-add" (click)="addViewsComment()">
             <div class="card-title">Загрузить ещё комментарии</div>

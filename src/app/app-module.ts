@@ -1,8 +1,5 @@
-import {
-  NgModule,
-  provideBrowserGlobalErrorListeners
-} from '@angular/core';
-import { BrowserModule} from '@angular/platform-browser';
+import { NgModule, provideBrowserGlobalErrorListeners } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -19,10 +16,11 @@ import { MatMenuModule } from '@angular/material/menu';
 import { authInterceptor } from './shared/services/auth-interceptor';
 import { Agreement } from './views/auth/agreement/agreement';
 import { Article } from './views/article/article';
-import {SharedModule} from './shared/shared-module';
+import { SharedModule } from './shared/shared-module';
+import { Blog } from './views/blog/blog';
 
 @NgModule({
-  declarations: [App, Footer, Header, Layout, Main, Agreement, Article],
+  declarations: [App, Footer, Header, Layout, Main, Agreement, Article, Blog],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -32,7 +30,7 @@ import {SharedModule} from './shared/shared-module';
     FormsModule,
     CarouselModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     provideBrowserGlobalErrorListeners(),

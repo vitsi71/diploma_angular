@@ -367,15 +367,15 @@
       <div class="base-title">Заявка на услугу</div>
       <div class="popup-form" [formGroup]="popupForm">
         <div class="select-wrapper">
-          <select class="popup-form-services" name="service" formControlName="service" #service>
+          <select class="popup-form-services" name="service" formControlName="service" >
             @for (serv of servicesType; track $index) {
               <option [value]="serv.key" >{{serv.value}}</option>
             }
           </select>
         </div>
-        <input type="text" class="input" placeholder="Ваше имя" formControlName="nameUser" #nameUser>
+        <input type="text" class="input" placeholder="Ваше имя" formControlName="nameUser" >
 
-        <input type="tel" class="input" placeholder="Ваш номер телефона" formControlName="phoneUser" #phoneUser>
+        <input type="tel" class="input" placeholder="Ваш номер телефона" formControlName="phoneUser" >
         <button class="button big" [disabled]="popupForm.invalid" (click)="sendRequest()">Оставить заявку</button>
 
         @if (popupErr()) {

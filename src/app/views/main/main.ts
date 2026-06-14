@@ -6,7 +6,7 @@ import {OtherServices} from '../../shared/services/other.services';
 import {DefaultResponseType} from '../../../types/default-response.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {ArticleServices} from '../../shared/services/article.services';
-import {ArticleCardType} from '../../../types/articleCard.type';
+import {ArticleCardType} from '../../../types/article.type';
 import {AuthService} from '../../shared/services/auth.service';
 
 @Component({
