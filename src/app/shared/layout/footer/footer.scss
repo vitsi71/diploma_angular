@@ -52,6 +52,9 @@
         font-weight: 400;
         font-size: 16px;
         line-height: 130%;
+        text-decoration: none;
+        color: $base-text-color;
+        display: block;
 
         &.address {
           width: 253px;
@@ -59,6 +62,8 @@
 
         &.email {
           font-size: 14px;
+          text-decoration: none;
+          color: $base-text-color;
         }
       }
 

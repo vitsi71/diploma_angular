@@ -18,25 +18,30 @@ import { Agreement } from './views/auth/agreement/agreement';
 import { Article } from './views/article/article';
 import { SharedModule } from './shared/shared-module';
 import { Blog } from './views/blog/blog';
+import {NgxMaskConfig, NgxMaskDirective, provideNgxMask} from 'ngx-mask';
+import { LOCALE_ID } from '@angular/core';
 
 @NgModule({
   declarations: [App, Footer, Header, Layout, Main, Agreement, Article, Blog],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    MatMenuModule,
-    AuthModule,
-    MatSnackBarModule,
-    FormsModule,
-    CarouselModule,
-    ReactiveFormsModule,
-    SharedModule,
-  ],
+    imports: [
+        BrowserModule,
+        AppRoutingModule,
+        MatMenuModule,
+        AuthModule,
+        MatSnackBarModule,
+        FormsModule,
+        CarouselModule,
+        ReactiveFormsModule,
+        SharedModule,
+        NgxMaskDirective,
+    ],
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideHttpClient(withFetch()),
     provideHttpClient(withInterceptors([authInterceptor])),
     { provide: MAT_SNACK_BAR_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
+    { provide: LOCALE_ID, useValue: 'ru-RU' },
+    provideNgxMask()
   ],
   bootstrap: [App],
 })
