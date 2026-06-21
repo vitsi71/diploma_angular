@@ -1,5 +1,28 @@
 @import "variables";
 
+@media (max-width: 1260px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 1024px) {
+  html {
+     font-size: 14px;
+  }
+}
+
+@media (max-width: 760px) {
+  html {
+    font-size: 13px;
+  }
+}
+@media (max-width: 600px) {
+  html {
+    font-size: 12px;
+  }
+}
+
 html, body {
   margin: 0;
   padding: 0;
@@ -7,13 +30,13 @@ html, body {
   font-weight: 400;
   color: $base-text-color;
   line-height: 130%;
-  font-size: 14px;
+  //font-size: .875rem;
   scroll-behavior: smooth;
   h1, h2, h3{
     color: $second-color !important;
   }
   h3{
-    font-size: 20px;
+     font-size: 1.25rem;
   }
 }
 
@@ -25,6 +48,7 @@ html, body {
 .container {
   max-width: $container-width;
   margin: 0 auto;
+  padding: 0 10px;
 }
 
 .button {
@@ -35,6 +59,11 @@ html, body {
   font-family: $font-family;
   color: $color-white;
   border: 0;
+
+  @media (max-width: 760px) {
+    padding-block: 7px;
+    padding-inline: 10px;
+  }
 
   &:hover {
     cursor: pointer;
@@ -50,22 +79,22 @@ html, body {
 
   &.smail {
     font-weight: 500;
-    font-size: 12px;
-    height: 36px;
+     font-size: 0.75rem;
+    height: 2.25rem;
   }
 
   &.big {
     font-weight: 400;
-    font-size: 16px;
-    height: 51px;
-    width: 163px;
+    font-size: 1rem;
+    height: 3.18rem;
+    width: 10.18rem;
   }
 
   &.blog {
     padding-inline: 18px;
     background: $color-white;
     font-weight: 400;
-    font-size: 11px;
+     font-size: 0.6875rem;
     line-height: 130%;
     color: $second-color;
   }
@@ -74,7 +103,7 @@ html, body {
 .base-title {
   font-family: $second-family;
   font-weight: 400;
-  font-size: 38px;
+  font-size: 2.375rem;
   line-height: 130%;
   color: $second-color;
 }
@@ -82,19 +111,19 @@ html, body {
 .card-title {
   font-family: $font-family;
   font-weight: 500;
-  font-size: 20px;
+   font-size: 1.25rem;
   line-height: 130%;
   color: $second-color;
 }
 
 input.input {
   box-sizing: border-box;
-  padding: 17px 20px;
+  padding: 1.0625rem 1.25rem;
   border: 2px solid $second-color;
   border-radius: 3px;
   font-family: $font-family;
   font-weight: 400;
-  font-size: 14px;
+   font-size: .875rem;
   color: $base-text-color;
   width: 100%;
 &:focus{
@@ -115,194 +144,6 @@ input[type="checkbox"] {
   width: 14px;
   height: 14px;
 }
-
-//
-//.small-input {
-//  border: 1px solid #6cac72;
-//  border-radius: 5px;
-//  width: 40px;
-//  height: 28px;
-//  text-align: center;
-//  padding: 2px;
-//  box-sizing: border-box;
-//  font-family: $font-family;
-//  font-weight: 400;
-//  font-size: 18px;
-//  color: $green-text-color;
-//}
-//
-//.button {
-//  text-align: center;
-//  padding: 15px;
-//  background: #456F49;
-//  border-radius: 5px;
-//  box-sizing: border-box;
-//  cursor: pointer;
-//  border: 0;
-//  font-family: 'Montserrat', sans-serif;
-//  font-weight: 400;
-//  font-size: 16px;
-//  color: #FFFFFF;
-//
-//  &.button-transparent {
-//    background-color: transparent;
-//    border: 1px solid #6cac72;
-//    color: $green-text-color;
-//  }
-//
-//  &.button-icon {
-//    display: flex;
-//    align-items: center;
-//    justify-content: center;
-//
-//    span {
-//      margin-left: 16px;
-//    }
-//  }
-//
-//  &:disabled {
-//    background: gray;
-//    cursor: not-allowed;
-//  }
-//
-//  &.button-in-cart span {
-//    &:first-child {
-//      display: block;
-//    }
-//
-//    &:last-child {
-//      display: none;
-//    }
-//  }
-//
-//  &:hover {
-//
-//    &.button-in-cart span {
-//      &:first-child {
-//        display: none;
-//      }
-//
-//      &:last-child {
-//        display: block;
-//      }
-//    }
-//  }
-//}
-//
-//a.button {
-//  display: inline-block;
-//  text-decoration: none;
-//}
-//
-//.mat-mdc-menu-item-text {
-//  font-family: 'Montserrat', sans-serif !important;
-//  font-weight: 400 !important;
-//
-//  a {
-//    text-decoration: none;
-//    color: $gray-text-color;
-//  }
-//}
-//
-//.carousel-header {
-//  display: flex;
-//  align-items: center;
-//  justify-content: space-between;
-//  margin-bottom: 50px;
-//
-//  .carousel-title {
-//    @include head-lora-32
-//  }
-//
-//  .carousel-arrows {
-//    display: flex;
-//    align-items: center;
-//    justify-content: center;
-//
-//    a {
-//      cursor: pointer;
-//
-//      &:first-child {
-//        margin-right: 30px;
-//      }
-//    }
-//  }
-//}
-//
-//
-//.data-form-radio {
-//  display: flex;
-//  flex-direction: column;
-//  gap: 12px;
-//}
-//
-//.data-form-radio-block {
-//  display: flex;
-//  align-items: center;
-//  cursor: pointer;
-//  user-select: none;
-//}
-//
-//.data-form-radio-block input {
-//  position: absolute;
-//  opacity: 0;
-//  cursor: pointer;
-//}
-//
-//.radio-icon {
-//  position: relative;
-//  height: 18px !important;
-//  width: 18px !important;;
-//  border: 2px solid #2A592E;
-//  border-radius: 50%;
-//  margin-right: 12px;
-//  transition: border-color 0.2s ease-in-out;
-//  box-sizing: border-box;
-//}
-//
-//.data-form-radio-block:hover .radio-icon {
-//  border-color: #377A3EFF;
-//}
-//
-//.data-form-radio-block input:checked ~ .radio-icon {
-//  border-color: #2A592E;
-//}
-//
-//.radio-icon:after {
-//  content: "";
-//  position: absolute;
-//  display: none;
-//  top: 50%;
-//  left: 50%;
-//  transform: translate(-50%, -50%);
-//  width: 8px;
-//  height: 8px;
-//  border-radius: 50%;
-//  background: #2A592E;
-//  transition: transform 0.2s ease-in-out;
-//}
-//
-//.data-form-radio-block input:checked ~ .radio-icon:after {
-//  display: block;
-//  animation: radioSelect 0.3s ease-out;
-//}
-//
-//@keyframes radioSelect {
-//  0% {
-//    transform: translate(-50%, -50%) scale(0);
-//  }
-//  80% {
-//    transform: translate(-50%, -50%) scale(1.2);
-//  }
-//  100% {
-//    transform: translate(-50%, -50%) scale(1);
-//  }
-//}
-//
-//.cdk-overlay-pane.mat-mdc-dialog-panel{
-//  max-width: none !important;
-//}
-//
-//.mat-mdc-progress-spinner .mdc-circular-progress__determinate-circle, .mat-mdc-progress-spinner .mdc-circular-progress__indeterminate-circle-graphic {
-//  stroke: #648F64 !important;
-//}
+.z-index{
+  z-index: -1;
+}

@@ -9,6 +9,7 @@ import {ArticleServices} from '../../shared/services/article.services';
 import {ArticleCardType} from '../../../types/article.type';
 import {AuthService} from '../../shared/services/auth.service';
 import {HttpErrorResponse} from '@angular/common/http';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-main',
@@ -23,13 +24,14 @@ export class Main implements OnInit {
   popupErr: WritableSignal<boolean> = signal<boolean>(false);
   respPopup: WritableSignal<boolean> = signal<boolean>(false);
   articleTop: WritableSignal<ArticleCardType[]> = signal<ArticleCardType[]>([]);
-
+  burger:WritableSignal<boolean>=signal<boolean>(false);
 
   protected readonly ServiceName: typeof ServiceName = ServiceName;
 
   private authService: AuthService = inject(AuthService);
   private articleServices: ArticleServices = inject(ArticleServices);
   private otherServices: OtherServices = inject(OtherServices);
+  private destroy$:Subject<void> = new Subject<void>();
 
   private fb: FormBuilder = inject(FormBuilder);
 
@@ -49,6 +51,10 @@ export class Main implements OnInit {
   }));
 
   ngOnInit(): void {
+    this.otherServices.burger$.pipe(takeUntil(this.destroy$))
+      .subscribe((burger: boolean) => {
+        this.burger.set(burger);
+      });
     this.articleServices.getArticlesTop()
       .subscribe({
         next: (data: ArticleCardType[] | DefaultResponseType): void => {
@@ -64,19 +70,29 @@ export class Main implements OnInit {
       });
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();   // Эмит сигнала завершения
+    this.destroy$.complete(); // Освобождение ресурсов Subject
+  }
+
 // настройки для карусели баннеров
   mainSliderOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
+    touchDrag: true,
+    pullDrag: true,
     margin: 20, // настройка расстояния между слайдами за счет сдвига последнего слайда
     dots: true,
     navSpeed: 700,
     navText: ['', ''],
     responsive: {
-      940: {
-        items: 1
+      630: {
+        items: 1,
+        dots: true,
+      },
+      300: {
+        items: 1,
+        dots: false,
       }
     },
     nav: false
@@ -86,15 +102,21 @@ export class Main implements OnInit {
   reviewsSliderOptions: OwlOptions = {
     loop: true,
     mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
+    touchDrag: true,
+    pullDrag: true,
     margin: 25, // настройка расстояния между слайдами за счет сдвига последнего слайда
     dots: false,
     navSpeed: 700,
     navText: ['', ''],
     responsive: {
-      940: {
+      1240: {
         items: 3
+      },
+      750: {
+        items: 2
+      },
+      200: {
+        items: 1
       }
     },
     nav: false

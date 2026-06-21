@@ -1,9 +1,26 @@
 <div class="header">
   <div class="container">
+
+    <div class="burger" (click)="burgerOn()" >
+      <svg id="Layer_1" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512" width="512"
+           xmlns="http://www.w3.org/2000/svg">
+        <path
+          d="m464.883 64.267h-417.766c-25.98 0-47.117 21.136-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.013-21.137-47.149-47.117-47.149z"/>
+        <path
+          d="m464.883 208.867h-417.766c-25.98 0-47.117 21.136-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.013-21.137-47.149-47.117-47.149z"/>
+        <path
+          d="m464.883 353.467h-417.766c-25.98 0-47.117 21.137-47.117 47.149 0 25.98 21.137 47.117 47.117 47.117h417.766c25.98 0 47.117-21.137 47.117-47.117 0-26.012-21.137-47.149-47.117-47.149z"/>
+      </svg>
+    </div>
+
     <a routerLink="/" class="logo">
       <img src="assets/images/Logotype.png" alt="logo">
     </a>
-    <div class="header-menu">
+
+
+    <div [class.burger-menu]="burger" (click)="burgerOn()"></div>
+
+     <div class="header-menu" [class.active]="burger" (click)="burgerOn()">
       <nav>
         <ul>
           <li>
@@ -26,7 +43,8 @@
     </div>
     <a href="tel:+749934313340" class="header-phone">+7 (499) 343-13-34</a>
     <div class="header-auth">
-      <div class="header-auth-icon">
+      <div>
+
         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path
             d="M18.1399 21.62C17.2599 21.88 16.2199 22 14.9999 22H8.99986C7.77986 22 6.73986 21.88 5.85986 21.62C6.07986 19.02 8.74986 16.97 11.9999 16.97C15.2499 16.97 17.9199 19.02 18.1399 21.62Z"
@@ -38,7 +56,7 @@
             d="M15.5799 10.58C15.5799 12.56 13.9799 14.17 11.9999 14.17C10.0199 14.17 8.41992 12.56 8.41992 10.58C8.41992 8.60002 10.0199 7 11.9999 7C13.9799 7 15.5799 8.60002 15.5799 10.58Z"
             stroke="#071739" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/>
         </svg>
-      </div>
+    </div>
       <div class="header-auth-info">
         @if (isLogged()) {
           <p [matMenuTriggerFor]="menu">Привет, {{ userName() }}!</p>
@@ -48,7 +66,7 @@
             </button>
           </mat-menu>
         } @else {
-          <a routerLink="/login">Войти</a>
+          <div routerLink="/login">Войти</div>
         }
       </div>
     </div>

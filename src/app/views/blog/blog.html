@@ -2,7 +2,7 @@
   <div class="container">
     <div class="base-title">Блог</div>
 
-    <div class="blog-filter" (click)="$event.stopPropagation()">
+    <div class="blog-filter"   [class.z-index]="burger()" (click)="$event.stopPropagation()">
       <div class="filters-active">
         @for (category of categories(); track $index) {
           @if (category.isActive) {

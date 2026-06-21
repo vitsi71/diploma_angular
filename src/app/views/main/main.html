@@ -1,6 +1,6 @@
 <div class="main">
   <div class="container">
-    <section class="main-slider">
+    <section class="main-slider" [class.z-index]="burger()">
       <div class="carousel-arrows">
         <a (click)="owlCar.prev()">
           <svg width="15" height="28" viewBox="0 0 15 28" fill="none" xmlns="http://www.w3.org/2000/svg"
@@ -212,7 +212,7 @@
     <section class="main-reviews" id="main-reviews">
 
       <div class="base-title">Отзывы о нашей работе</div>
-      <div class="main-reviews-slider">
+      <div class="main-reviews-slider" [class.z-index]="burger()">
         <div class="carousel-reviews-arrows">
           <a (click)="owlReviewsCar.prev()">
             <div class="arr-prev">
@@ -294,12 +294,7 @@
     </section>
 
     <section class="main-contacts" id="main-contacts">
-      <div class="main-contacts-map">
-        <iframe
-          src="https://yandex.ru/map-widget/v1/?um=constructor%3A67c4ca3f3c9bfd20b1750a9a08af9bca729446465fa6f43a4594a384f0f25c21&amp;source=constructor"
-          width="800" height="600" style="margin-left: -100px; margin-top: -50px;" frameborder="0"></iframe>
 
-      </div>
       <div class="main-contacts-info">
         <div class="base-title">Контакты</div>
         <div class="main-contacts">
@@ -346,14 +341,22 @@
           </div>
         </div>
       </div>
+
+      <div class="main-contacts-map">
+        <iframe
+          src="https://yandex.ru/map-widget/v1/?um=constructor%3A67c4ca3f3c9bfd20b1750a9a08af9bca729446465fa6f43a4594a384f0f25c21&amp;source=constructor"
+          width="900" height="600"  frameborder="0"></iframe>
+
+      </div>
+
     </section>
 
   </div>
 </div>
 
 
-<div class="popup" [style.display]="popup ? 'block':'none'">
-  <div class="popup-window">
+<div class="popup" [style.display]="popup ? 'block':'none'" (click)="popupClose()">
+  <div class="popup-window" (click)="$event.stopPropagation()">
     <div class="close-popup" (click)="popupClose()">
       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
         <line x1="1.93562" y1="2.65" x2="13.9564" y2="14.6708" stroke="#BEBEBE" stroke-linecap="round"/>
@@ -369,6 +372,7 @@
         <button class="button smail" (click)="popupClose()">Окей</button>
       </div>
     } @else {
+      <div class="popup-content">
       <div class="base-title">Заявка на услугу</div>
       <div class="popup-form" [formGroup]="popupForm">
         <div class="select-wrapper">
@@ -389,6 +393,7 @@
             Ошибка при отправке формы. Попробуйте еще раз
           </div>
         }
+      </div>
       </div>
     }
   </div>

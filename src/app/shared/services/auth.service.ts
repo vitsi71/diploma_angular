@@ -74,7 +74,6 @@ export class AuthService {
     localStorage.setItem(this.refreshTokenKey, refreshToken);
     this.isLogged = true;
     this.isLogged$.next(true);
-    console.log(this.isLogged);
   }
 
   public getTokens(): { accessToken: string | null, refreshToken: string | null } {

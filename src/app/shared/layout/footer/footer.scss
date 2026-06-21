@@ -3,18 +3,53 @@
 .footer {
   font-family: $font-family;
   font-weight: 400;
-  font-size: 16px;
+  font-size: 1rem;
   color: $base-text-color;
   background-color: #B9D5FD;
 
   .container {
-    padding: 40px 0 54px;
+    padding: 40px 10px 54px;
+    @media (max-width: 1024px) {
+      padding: 35px 10px 32px;
+    }
+    @media (max-width: 890px) {
+      padding: 30px 10px 28px;
+    }
+    @media (max-width: 760px) {
+      padding: 20px 10px 15px;
+      display: flex;
+      flex-direction: column;
+     align-items: center;
+    }
+    @media (max-width: 600px) {
+      padding: 10px;
+    }
+    @media (max-width: 375px) {
+     padding: 5px;
+    }
+    .logo {
+      img {
+        object-fit: contain;
+        width: 100%;
+      }
 
+      @media (max-width: 1024px) {
+        width: 70px;
+      }
+    }
     .footer-menu {
       display: flex;
       align-items: center;
       margin-bottom: 40px;
-
+      @media (max-width: 760px) {
+        margin-bottom: 10px;
+        nav{
+          display: none;
+        }
+      }
+        @media (max-width: 375px) {
+          margin-bottom: 5px;
+        }
       nav ul {
         display: flex;
         gap: 20px;
@@ -42,6 +77,29 @@
       gap: 60px;
       margin-bottom: 6px;
 
+      @media (max-width: 880px) {
+        gap: 20px;
+        justify-content: space-between;
+      }
+      @media (max-width: 760px) {
+        display: inline-block;
+                text-align: center;
+
+        div {
+          display: flex;
+          gap: 20px;
+          align-items: center;
+          margin-bottom: 2px;
+          .footer-info-title, .button{
+            margin: 0;
+          }
+                }
+      }
+      @media (max-width: 481px) {
+        div {
+          gap: 10px;
+        }
+      }
       .footer-info-title {
         color: $second-color;
         font-weight: 500;
@@ -50,18 +108,21 @@
 
       .footer-info-text {
         font-weight: 400;
-        font-size: 16px;
+        font-size: 1rem;
         line-height: 130%;
         text-decoration: none;
         color: $base-text-color;
         display: block;
 
         &.address {
-          width: 253px;
+          max-width: 253px;
+          @media (max-width: 760px) {
+            max-width: none;
+          }
         }
 
         &.email {
-          font-size: 14px;
+           font-size: .875rem;
           text-decoration: none;
           color: $base-text-color;
         }
@@ -75,6 +136,10 @@
         display: flex;
         gap: 12px;
         padding-top: 5px;
+        @media (max-width: 760px) {
+          justify-content: center;
+        }
+
       }
     }
     .copyright{
@@ -96,16 +161,26 @@
   .popup-window {
     border: 2px solid $second-color;
     border-radius: 10px;
-    width: 727px;
-    height: 489px;
+    width: min(727px,95%);
+    aspect-ratio: 727/489;
     box-sizing: border-box;
     background: $color-white;
-    padding: 94px 140px 50px;
+    //padding: 94px 140px 50px;
     text-align: center;
     position: fixed;
     top: calc(50% - 245px);
     left: calc(50% - 364px);
     z-index: 15;
+    display: flex;
+    align-content: center;
+    @media (max-width: 760px) {
+      top: calc(50% - 150px);;
+      left: 10px;
+      margin-right: 10px;
+      box-sizing: border-box;
+      padding: 5vw;
+    }
+
 
     .close-popup {
       position: absolute;
@@ -113,74 +188,114 @@
       right: 30px;
       cursor: pointer;
     }
+    .popup-content {
 
-    .popup-form {
-      margin-top: 20px;
-      padding: 0 11px;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
+      max-width: 422px;
+      margin: auto;
+      .base-title {
 
-      .select-wrapper {
-        position: relative;
-        display: inline-block;
-      }
-
-      .select-wrapper::after {
-        content: '▼';
-        color: $second-color;
-        font-size: 18px;
-        position: absolute;
-        right: 15px;
-        top: 50%;
-        transform: translateY(-50%);
-        pointer-events: none;
-      }
-
-      .popup-form-services {
-        box-sizing: border-box;
-        padding: 17px 20px;
-        border: 2px solid $second-color;
-        border-radius: 3px;
-        font-family: $font-family;
-        font-weight: 400;
-        font-size: 14px;
-        color: $base-text-color;
-        -webkit-appearance: none;
-        -moz-appearance: none;
-        appearance: none;
-        width: 100%;
-
-        &:focus {
-          outline: none;
-          border-color: $second-color;
+        @media (max-width: 450px) {
+          font-size: 2rem;
         }
+        @media (max-width: 400px) {
+          font-size: 1.8rem;
+        }
+        @media (max-width: 375px) {
+          font-size: 1.5rem;
+        }
+
       }
 
-      .button {
-        margin-top: 15px;
-        width: 100%;
-      }
-      .popup-err{
-        font-family: $font-family;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 130%;
-        color: #bf0303;
-        margin-top: 10px;
+      .popup-form {
+        margin-top: 20px;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+        @media (max-width: 400px) {
+          margin-top: 10px;
+        }
+
+        .select-wrapper {
+          position: relative;
+          display: inline-block;
+        }
+
+        .select-wrapper::after {
+          content: '▼';
+          color: $second-color;
+          font-size: 1.125rem;
+          position: absolute;
+          right: 15px;
+          top: 50%;
+          transform: translateY(-50%);
+          pointer-events: none;
+        }
+
+        .popup-form-services {
+          box-sizing: border-box;
+          padding: 17px 20px;
+          border: 2px solid $second-color;
+          border-radius: 3px;
+          font-family: $font-family;
+          font-weight: 400;
+          font-size: .875rem;
+          color: $base-text-color;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          appearance: none;
+          width: 100%;
+
+          &:focus {
+            outline: none;
+            border-color: $second-color;
+          }
+        }
+
+        .button {
+          margin-top: 15px;
+          width: 100%;
+        }
+
+        .popup-err {
+          font-family: $font-family;
+          font-weight: 400;
+          font-size: .875rem;
+          line-height: 130%;
+          color: #bf0303;
+          margin-top: 10px;
+        }
       }
     }
     .popup-resp{
-      margin-top: 69px;
-      .popup-text{
+      margin: auto;
+      .base-title {
+
+        @media (max-width: 450px) {
+          font-size: 2rem;
+        }
+        @media (max-width: 400px) {
+          font-size: 1.8rem;
+        }
+        @media (max-width: 375px) {
+          margin-top: 20px;
+                  font-size: 1.5rem;
+                }
+
+      }
+
+      .popup-text {
         margin-top: 20px;
         margin-bottom: 40px;
         font-family: $font-family;
         font-weight: 500;
-        font-size: 14px;
+         font-size: .875rem;
         line-height: 130%;
         text-align: center;
-        color: $third-text-color
+        color: $third-text-color;
+        @media (max-width: 400px) {
+          margin-top: 10px;
+          margin-bottom: 20px;
+        }
       }
 
     }

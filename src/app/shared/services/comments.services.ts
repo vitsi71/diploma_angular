@@ -14,7 +14,7 @@ export class CommentsServices {
   private http:HttpClient = inject(HttpClient);
 
   // получение всех комментариев к статье
-  getComments(id:string,offset:number=0): Observable<CommentsType | DefaultResponseType> {
+  getComments(id:string,offset:number): Observable<CommentsType | DefaultResponseType> {
     const params = new HttpParams().set('article',id).set("offset" , offset.toString()) ;
     return this.http.get<CommentsType | DefaultResponseType>(environment.api + 'comments',{params});
   }

@@ -1,9 +1,10 @@
 import {inject, Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, Subject} from 'rxjs';
 import {DefaultResponseType} from '../../../types/default-response.type';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {CategoryType} from '../../../types/category.type';
+import {MatSnackBar} from '@angular/material/snack-bar';
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +12,7 @@ import {CategoryType} from '../../../types/category.type';
 export class OtherServices {
 
   private http: HttpClient = inject(HttpClient);
+  public burger$:  Subject<boolean> = new Subject<boolean>();
 
   request(name: string, phone: string, service?: string): Observable<DefaultResponseType> {
     let type: string = "consultation";

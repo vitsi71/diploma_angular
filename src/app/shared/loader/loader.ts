@@ -1,5 +1,6 @@
-import {Component, OnInit, signal, WritableSignal} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {LoaderService} from '../services/loader.service';
+import {toSignal} from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-loader',
@@ -7,17 +8,8 @@ import {LoaderService} from '../services/loader.service';
   templateUrl: './loader.html',
   styleUrl: './loader.scss',
 })
-export class Loader implements OnInit {
+export class Loader {
+  private loaderService: LoaderService = inject(LoaderService);
+  isShowed = toSignal(this.loaderService.isShowed$, { initialValue: false });
 
-  isShowed: WritableSignal<boolean> = signal<boolean>(false);
-
-  constructor(private loaderService: LoaderService) {
-  }
-
-  ngOnInit() {
-    this.loaderService.isShowed$
-      .subscribe((isShowed: boolean) => {
-        this.isShowed.set(isShowed);
-      })
-  }
 }

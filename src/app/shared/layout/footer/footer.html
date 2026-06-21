@@ -89,8 +89,8 @@
 </div>
 
 @if (popup) {
-  <div class="popup">
-    <div class="popup-window">
+  <div class="popup" (click)="popupClose()">
+    <div class="popup-window" (click)="$event.stopPropagation()">
       <div class="close-popup" (click)="popupClose()">
         <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
           <line x1="1.93562" y1="2.65" x2="13.9564" y2="14.6708" stroke="#BEBEBE" stroke-linecap="round"/>
@@ -106,6 +106,7 @@
           <button class="button smail" (click)="popupClose()">Окей</button>
         </div>
       } @else {
+        <div class="popup-content">
         <div class="base-title">Закажите бесплатную консультацию!</div>
         <div class="popup-form" [formGroup]="popupForm">
           <input type="text" class="input" placeholder="Ваше имя" formControlName="nameUser">
@@ -118,6 +119,7 @@
               Ошибка при отправке формы. Попробуйте еще раз
             </div>
           }
+        </div>
         </div>
       }
     </div>

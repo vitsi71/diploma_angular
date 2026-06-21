@@ -1,6 +1,8 @@
 
 export enum PagePaginationType {
   prev="prev",
-  next="next"
+  next="next",
+  end="end",
+  home="home"
 }
 

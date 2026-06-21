@@ -1,11 +1,11 @@
 <div class="main-blog-card">
   <div  class="blog-card-body">
-    <div class="blog-card-img">
+    <div class="blog-card-img" [class.z-index]="burger()">
       <img src='../../../assets/images/{{article.image}}' alt="">
       <button class="button blog" [routerLink]="['/blog']" [queryParams]="{category: article.category}">{{ article.category }}</button>
     </div>
     <div class="card-title">{{ article.title }}</div>
     <div class="blog-card-info">{{ article.description }}</div>
   </div>
-  <a [routerLink]="['/article']" [queryParams]="{url: article.url}">Читать дальше</a>
+  <a [routerLink]="['/article']" [queryParams]="{url: article.url}" >Читать дальше</a>
 </div>

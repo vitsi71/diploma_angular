@@ -28,7 +28,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
         catchError((err: HttpErrorResponse) => {
           //ошибка не в запросе login(ошибка может быть в логине-пароле) и refresh(чтобы не зациклить)
           if (err.status === 500 || err.status === 401 && !authReq.url.includes('login') && !authReq.url.includes('refresh')) {
-            return hendle401Error(authReq, next, authService, router);
+            return handle401Error(authReq, next, authService, router);
           }
           return throwError((): HttpErrorResponse => err)
         }),
@@ -42,7 +42,7 @@ export const authInterceptor: HttpInterceptorFn = (req, next) => {
 
 
 // token просрочен
-const hendle401Error = (req: HttpRequest<AuthResponseType | DefaultResponseType>,
+const handle401Error = (req: HttpRequest<AuthResponseType | DefaultResponseType>,
                         next: HttpHandlerFn, authService: AuthService, router: Router): Observable<HttpEvent<AuthResponseType | DefaultResponseType>> => {
 //запрашиваем новые через refresh
   return authService.refresh()

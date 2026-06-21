@@ -1,5 +1,5 @@
 import {Component, OnDestroy, OnInit, signal, WritableSignal} from '@angular/core';
-import {ArticleType, CommentsType, CommentType} from '../../../types/article.type';
+import {ArticlesType, ArticleType, CommentsType, CommentType} from '../../../types/article.type';
 import {ArticleServices} from '../../shared/services/article.services';
 import {ActivatedRoute, Params} from '@angular/router';
 import {DefaultResponseType} from '../../../types/default-response.type';
@@ -7,9 +7,10 @@ import {ArticleCardType} from '../../../types/article.type';
 import {MatSnackBar} from '@angular/material/snack-bar';
 import {AuthService} from "../../shared/services/auth.service";
 import {CommentsServices} from '../../shared/services/comments.services';
-import {HttpErrorResponse} from '@angular/common/http';
+import {HttpErrorResponse, HttpParams} from '@angular/common/http';
 import {ActionType} from '../../../types/action.type';
 import {Subject, takeUntil} from 'rxjs';
+import {PagePaginationType} from '../../../types/pagePagination.type';
 
 @Component({
   selector: 'app-article',
@@ -26,6 +27,11 @@ export class Article implements OnInit, OnDestroy {
   articleText: string = "";
   url: string = '';
   commentCount: number = 3;
+  offsetCount: number = 0;
+  commentPages: number = 5;
+
+  pageActive: number = 1;
+  pages: { value: number, isActive: boolean }[] = [];
 
   private destroy$: Subject<void> = new Subject<void>();
 
@@ -37,7 +43,7 @@ export class Article implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.commentCount = 3;
+
     this.isLogged.set(this.authService.getIsLoggedIn());
     this.authService.isLogged$.pipe(takeUntil(this.destroy$))
       .subscribe((isLoggedIn: boolean): void => {
@@ -52,6 +58,8 @@ export class Article implements OnInit, OnDestroy {
           this.articleServices.getArticle(this.url).subscribe({
             next: (data: ArticleType | DefaultResponseType):void => {
               this.article.set(data as ArticleType);
+              this.commentCount = 3;
+              this.offsetCount = 0;
               this.getComments();
             },
             error: (error: HttpErrorResponse): void => {
@@ -88,14 +96,24 @@ export class Article implements OnInit, OnDestroy {
   getComments():void {
     if (this.article().id) {
       let count: number = 0;
-      this.commentsServices.getComments(this.article().id).subscribe({
+      this.commentsServices.getComments(this.article().id,this.offsetCount).subscribe({
         next: (data: CommentsType | DefaultResponseType):void => {
           // если комментарии к статье есть
-          if ((data as CommentsType).comments.length > 0) {
-            // определяем количество выводимых комментариев
-            count = ((data as CommentsType).comments.length < this.commentCount) ? (data as CommentsType).comments.length : this.commentCount;
-            (data as CommentsType).allCount = (data as CommentsType).comments.length;
-            (data as CommentsType).comments = (data as CommentsType).comments.slice(0, count);
+          if ((data as CommentsType).allCount > 0) {
+            if (this.commentCount === 3 ){  // обрезаем массив для вывода первых комментариев
+              (data as CommentsType).comments = (data as CommentsType).comments.slice(0, 3);
+            }
+
+
+
+
+
+              this.pages = [];
+            this.commentPages=Math.ceil((data as CommentsType).allCount/10);
+              for (let i = 1; i <= this.commentPages; i++) {
+                this.pages.push({value: i, isActive: i === this.pageActive});
+              }
+
 
             if (this.isLogged()) {
               // определяем реакции конкретного абонента на эту статью
@@ -158,7 +176,14 @@ export class Article implements OnInit, OnDestroy {
 
   //Расширение списка комментариев
   addViewsComment():void {
-    this.commentCount += 10;
+    if( this.commentCount<10){
+      this.commentCount = 10;
+    }else{
+      this.commentCount += 10;
+      this.offsetCount += 10;
+      this.pageActive= this.commentCount/10
+    }
+
     this.getComments();
   }
 
@@ -192,5 +217,27 @@ export class Article implements OnInit, OnDestroy {
     }
   }
 
+
+  // пагинация страниц комментариев
+  paginationPage(page: number | PagePaginationType): void {
+    if (page === PagePaginationType.next) {  // получение номера нужной страницы с помощью стрелок
+      this.pageActive += 1;
+    } else if (page === PagePaginationType.prev) {
+      this.pageActive -= 1;
+    } else if (page === PagePaginationType.end) {
+      this.pageActive = this.pages.length;
+    } else if (page === PagePaginationType.home) {
+      this.pageActive = 1;
+    } else {
+      this.pageActive = page as number; // выбор номерв страницы на прямую
+    }
+    this.commentCount = this.pageActive*10;
+    this.offsetCount = (this.pageActive-1)*10;
+    this.getComments();
+  }
+
+
+
   protected readonly ActionType = ActionType;
+  protected readonly PagePaginationType = PagePaginationType;
 }

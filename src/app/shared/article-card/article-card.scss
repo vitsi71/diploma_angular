@@ -1,11 +1,16 @@
 @import "../../../assets/styles/variables";
 
 .main-blog-card {
+  margin: 0 auto;
   width: 291px;
   height: 571px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  @media (max-width: 800px) {
+    height: 38rem;
+    padding-bottom: 10px;
+  }
 .blog-card-body {
   height: 550px;
   overflow: hidden;
@@ -19,6 +24,7 @@
     overflow: hidden;
     margin-bottom: 15px;
     position: relative;
+    //z-index: -1;
 
     img {
       height: 100%;
@@ -37,10 +43,11 @@
 
   .blog-card-info {
     padding-right: 4px;
+    font-size: .875rem;
   }
 }
   a {
     color: $second-color;
-    font-size: 16px;
+    font-size: 1rem;
   }
 }

@@ -26,6 +26,7 @@ export class Blog implements OnInit, OnDestroy {
   params: HttpParams = new HttpParams();
   pages: { value: number, isActive: boolean }[] = [];
   pageActive: number = 1;
+  burger:WritableSignal<boolean>=signal<boolean>(false);
 
   constructor(private otherServices: OtherServices,
               private activatedRoute: ActivatedRoute,
@@ -34,6 +35,10 @@ export class Blog implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.otherServices.burger$.pipe(takeUntil(this.destroy$))
+      .subscribe((burger: boolean) => {
+        this.burger.set(burger);
+      });
 
     this.otherServices.getCategories()
       .subscribe({

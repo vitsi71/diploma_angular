@@ -58,7 +58,15 @@ export class Login {
             this.authService.setTokens(loginResponse.accessToken, loginResponse.refreshToken);
             this.authService.userId = loginResponse.userId;
             this._snackBar.open('Вы успешно авторизовались');
-            this.router.navigate(['/']);
+            // загружаем последнюю страницу, с которой разлогинились
+            const lastPage = localStorage.getItem('lastPage');
+            if (lastPage) {
+              this.router.navigateByUrl(lastPage);
+              localStorage.removeItem('lastPage'); // Очищаем после использования
+            } else {
+              this.router.navigate(['/']); // Страница по умолчанию
+            }
+
           },
           error: (error: HttpErrorResponse): void => {
             if (error.error.message !== "Failed to fetch") {

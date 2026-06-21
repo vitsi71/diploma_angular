@@ -1,12 +1,23 @@
 @import "../../../assets/styles/variables";
 
 .blog {
-  padding-top: 80px;
-  padding-bottom: 120px;
+  padding: 80px 0 120px;
+    @media (max-width: 1200px) {
+      padding: 60px 0 100px;
+  }
+  @media (max-width: 1024px) {
+    padding: 40px 0 80px;
+  }
+  @media (max-width: 760px) {
+    padding: 30px 0 60px;
+  }
+  @media (max-width: 500px) {
+    padding: 20px 0 40px;
+  }
 
   .container {
     .base-title {
-      margin-bottom: 40px;
+      margin-bottom: 2.5rem;
     }
     .blog-filter{
       display: flex;
@@ -18,14 +29,16 @@
       .filters-active{
         display: flex;
         align-items: center;
+        //flex-wrap: wrap;
+overflow: hidden;
         gap:20px;
         .filter-active{
-          font-size: 16px;
+          font-size: 1rem;
           color: $second-color;
           border: 1px solid $second-color;
           border-radius: 5px;
-          padding-block: 8px;
-          padding-inline: 20px;
+          padding-block: 0.5rem;
+          padding-inline: 1.25rem;
           display: flex;
           align-items: center;
           justify-content: flex-start;
@@ -38,7 +51,7 @@
         }
       }
       .filter-menu{
-        font-size: 16px;
+        font-size: 1rem;
         display: flex;
         align-items: center;
         justify-content: center;
@@ -63,7 +76,7 @@
   align-items: center;
   justify-content: space-between;
   background: #b9d5fd;
-  font-size: 16px;
+  font-size: 1rem;
   padding: 12px 23px;
   cursor: pointer;
 }
@@ -80,7 +93,7 @@
             color: #bebebe;
             cursor: pointer;
             span{
-              font-size: 24px;
+               font-size: 1.5rem;
             }
             &.active{
               color: $base-text-color;
@@ -97,6 +110,7 @@
       row-gap: 40px;
       column-gap: 24px;
       flex-wrap: wrap;
+      justify-content: center;
     }
 .blog-pagination{
   margin-top: 60px;
@@ -104,7 +118,7 @@
   gap:40px;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+   font-size: 1.25rem;
   .pagination-arr{
     padding: 0 10px;
     cursor: pointer;
